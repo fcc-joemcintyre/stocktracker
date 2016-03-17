@@ -1,0 +1,12 @@
+.npmignore
+.gitignore
+.babelrc
+.env
+.jshintrc
+.travis.yml
+gulpfile.js
+Procfile
+
+doc/
+src/
+test/
