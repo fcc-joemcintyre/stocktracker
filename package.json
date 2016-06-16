@@ -23,8 +23,7 @@
     "test-client": "mocha test/client/**/*.js --compilers js:babel-core/register",
     "test-server": "mocha test/server/**/*.js",
     "start": "nodemon dist/main.js --port=3000",
-    "build": "gulp",
-    "postinstall": "gulp"
+    "build": "gulp"
   },
   "devDependencies": {
     "babel-core": "6.5.2",
