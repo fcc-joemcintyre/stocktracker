@@ -21,9 +21,12 @@
   "scripts": {
     "test": "npm run test-client && npm run test-server",
     "test-client": "mocha test/client/**/*.js --compilers js:babel-core/register",
-    "test-server": "mocha test/server/**/*.js",
+    "test-server": "mocha test/server/test-main.js",
     "start": "nodemon dist/main.js --port=3000",
-    "build": "gulp"
+    "build": "gulp",
+    "coverage": "npm run c-server && npm run c-combine",
+    "c-server": "./node_modules/istanbul/lib/cli.js cover --dir ./coverage/server ./node_modules/mocha/bin/_mocha test/server/test-main.js -- -R spec",
+    "c-combine": "./node_modules/istanbul/lib/cli.js report --dir ./coverage --include **/*coverage.json json lcov"
   },
   "devDependencies": {
     "babel-core": "6.5.2",
@@ -44,6 +47,8 @@
     "gulp-sourcemaps": "1.6.0",
     "gulp-uglify": "1.5.3",
     "gulp-util": "3.0.7",
+    "istanbul": "0.4.3",
+    "mocha": "2.5.3",
     "nodemon": "1.9.2",
     "react-addons-test-utils": "0.14.7",
     "vinyl-buffer": "1.0.0",
