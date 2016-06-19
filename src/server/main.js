@@ -2,9 +2,9 @@
  * Copyright (c) Joe McIntyre, 2016
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-"use strict";
-const processCommand = require ("./cmd").processCommand;
-const server = require ("./server");
+'use strict';
+const processCommand = require ('./cmd').processCommand;
+const server = require ('./server');
 
 if (require.main === module) {
   main ();

@@ -2,14 +2,14 @@
  * Copyright (c) Joe McIntyre, 2016
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-import React from "react";
-import {render} from "react-dom";
-import Titlebar from "./Titlebar.jsx";
-import Range from "./Range.jsx";
-import StockChart from "./StockChart.jsx";
-import Stock from "./Stock.jsx";
-import StockEntry from "./StockEntry.jsx";
-import Status from "./Status.jsx";
+import React from 'react';
+import {render} from 'react-dom';
+import Titlebar from './Titlebar.jsx';
+import Range from './Range.jsx';
+import StockChart from './StockChart.jsx';
+import Stock from './Stock.jsx';
+import StockEntry from './StockEntry.jsx';
+import Status from './Status.jsx';
 
 export default class App extends React.Component {
   constructor (props) {
@@ -19,8 +19,8 @@ export default class App extends React.Component {
       retrieving: [],
       data: [],
       months: 12,
-      colors: ["blue", "green", "lightblue", "lightgreen", "purple", "orange",
-        "lightpurple", "steelblue"],
+      colors: ['blue', 'green', 'lightblue', 'lightgreen', 'purple', 'orange',
+        'lightpurple', 'steelblue'],
       chartKey: 1
     };
     this.addStock = this.addStock.bind (this);
@@ -35,7 +35,7 @@ export default class App extends React.Component {
    */
   componentDidMount () {
     let socket = io.connect ();
-    socket.on ("update", this.update);
+    socket.on ('update', this.update);
   }
 
   /**
@@ -45,7 +45,7 @@ export default class App extends React.Component {
    * @param symbol Stock trading symbol
    */
   addStock (symbol) {
-    this.server ("PUT", symbol);
+    this.server ('PUT', symbol);
     this.state.retrieving.push (symbol);
     this.forceUpdate ();
   }
@@ -64,7 +64,7 @@ export default class App extends React.Component {
         }
       }
     });
-    req.open (action, "api/stocks/" + symbol, true);
+    req.open (action, 'api/stocks/' + symbol, true);
     req.send ();
   }
 
@@ -73,8 +73,8 @@ export default class App extends React.Component {
    * @param symbol Stock trading symbol
    */
   removeStock (symbol) {
-    console.log ("removeStock", symbol);
-    this.server ("DELETE", symbol);
+    console.log ('removeStock', symbol);
+    this.server ('DELETE', symbol);
   }
 
   /**
@@ -100,12 +100,12 @@ export default class App extends React.Component {
     data = data.filter (item => {
       if (item.status !== 0) {
         let text = (item.status >= 500)
-          ? "Stock quote service unavailable"
+          ? 'Stock quote service unavailable'
           : (item.status === 404)
-            ? "Stock symbol not found"
+            ? 'Stock symbol not found'
             : (item.status === 429)
-              ? "Request limit reached"
-              : "Unknown";
+              ? 'Request limit reached'
+              : 'Unknown';
         errors.push (`[Stock:${item.symbol} Error:${item.status} (${text})]`);
         return false;
       }
@@ -151,9 +151,9 @@ export default class App extends React.Component {
       <div>
         <Titlebar/>
         <Range months={this.state.months} onRangeChanged={this.onRangeChanged}/>
-        <StockChart key={this.state.chartKey} className="stockChart"
+        <StockChart key={this.state.chartKey} className='stockChart'
           width={900} height={500} months={this.state.months} stocks={this.state.data}/>
-        <div className="stockArea">
+        <div className='stockArea'>
           {stocks}
           {stockEntry}
         </div>
@@ -163,4 +163,4 @@ export default class App extends React.Component {
   }
 }
 
-render (<App/>, document.getElementById ("app"));
+render (<App/>, document.getElementById ('app'));

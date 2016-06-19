@@ -2,7 +2,7 @@
  * Copyright (c) Joe McIntyre, 2016
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-import React from "react";
+import React from 'react';
 
 /**
  * Outstanding requests and error status display.
@@ -35,7 +35,7 @@ export default class Range extends React.Component {
     }
 
     return (
-      <div className="rangeBox">
+      <div className='rangeBox'>
         {spans}
       </div>
     );

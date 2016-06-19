@@ -158,13 +158,13 @@ export default class StockChart extends React.Component {
  */
 function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
   // use only one tooltip element
-  let tooltip = d3.select (".tooltip");
+  let tooltip = d3.select ('.tooltip');
   if (tooltip.size () === 0) {
     tooltip = d3.select ('body').append ('div')
       .attr ('class', 'tooltip')
       .style ('opacity', 0);
   }
-  let tooltipLine = d3.select (".tooltip-line");
+  let tooltipLine = d3.select ('.tooltip-line');
   if (tooltipLine.size () === 0) {
     tooltipLine = d3.select ('body').append ('div')
       .attr ('class', 'tooltip-line')

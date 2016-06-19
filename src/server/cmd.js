@@ -2,7 +2,7 @@
  * Copyright (c) Joe McIntyre, 2016
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-"use strict";
+'use strict';
 
 /**
  * Parse a string to an integer, returning null if not an integer
@@ -37,17 +37,17 @@ function processCommand (args) {
 
   for (let arg of args) {
     // if a settings argument, it will contain an equals sign
-    if (arg.indexOf ("=") > -1) {
+    if (arg.indexOf ('=') > -1) {
       // divide argument into left and right sides, and assign
-      let elements = arg.split ("=");
+      let elements = arg.split ('=');
       let key = elements[0];
-      if ((key === "-p") || (key === "--port")) {
+      if ((key === '-p') || (key === '--port')) {
         result.port = elements[1];
       } else{
         errors.push (`Error: Invalid option (${elements[0]})`);
       }
     } else {
-      if (arg === "-h" || arg === "--help") {
+      if (arg === '-h' || arg === '--help') {
         showHelp = true;
       } else {
         errors.push (`Error: Invalid option (${arg})`);
@@ -58,7 +58,7 @@ function processCommand (args) {
   // validate arguments, assign defaults
   let port = getInteger (result.port);
   if ((port === null) || (port < 0) || (port > 65535)) {
-    errors.push ("Invalid port number (${result.port}). Must be integer between 0 and 65535");
+    errors.push ('Invalid port number (${result.port}). Must be integer between 0 and 65535');
   } else if (port === 0) {
     result.port = defaults.port;
   } else {

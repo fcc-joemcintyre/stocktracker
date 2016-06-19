@@ -2,8 +2,8 @@
  * Copyright (c) Joe McIntyre, 2016
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-"use strict";
-const request = require ("request");
+'use strict';
+const request = require ('request');
 
 // socket.io and stock data
 let io;
@@ -16,9 +16,9 @@ let stocks = [];
  */
 function init (_io) {
   io = _io;
-  io.on ("connection", (socket) => {
-    console.log ("added connection");
-    socket.emit ("update", JSON.stringify (stocks));
+  io.on ('connection', (socket) => {
+    console.log ('added connection');
+    socket.emit ('update', JSON.stringify (stocks));
   });
 }
 
@@ -43,7 +43,7 @@ function registerStock (req, res) {
     }
     result = {errorCode:0};
   } else {
-    result = {errorCode:1, message:"Symbol missing"};
+    result = {errorCode:1, message:'Symbol missing'};
   }
   res.status (200).json (result);
 }
@@ -67,7 +67,7 @@ function deregisterStock (req, res) {
     }
     result = {errorCode:0};
   } else {
-    result = {errorCode:1, message:"Symbol missing"};
+    result = {errorCode:1, message:'Symbol missing'};
   }
   res.status (200).json (result);
 }
@@ -86,14 +86,14 @@ function addStock (symbol) {
 
     // construct url and retrieve data
     let key = process.env.QKEY;
-    let keyParam = (key) ? `&api_key=${key}` : "";
+    let keyParam = (key) ? `&api_key=${key}` : '';
     let base = `https://www.quandl.com/api/v3/datasets/WIKI/${symbol}.json`;
     let url = `${base}?order=asc&${dates}${keyParam}`;
     request.get (url, (err, res, body) => {
       if (! err) {
         if (res.statusCode === 200) {
           let data = JSON.parse (body);
-          let index = data.dataset.name.indexOf ("(");
+          let index = data.dataset.name.indexOf ('(');
           let name = (index === -1) ? data.dataset.name : data.dataset.name.substring (0, index - 1);
           // add stock to set of tracked stocks, broadcast to connected clients
           stocks.push ({
@@ -111,9 +111,9 @@ function addStock (symbol) {
             name: undefined,
             data: undefined
           });
-          console.log ("Fetch error: status code ", res.statusCode);
+          console.log ('Fetch error: status code ', res.statusCode);
           let data = JSON.parse (body);
-          console.log ("  Detailed msg", data);
+          console.log ('  Detailed msg', data);
           broadcast ();
         }
       } else {
@@ -123,7 +123,7 @@ function addStock (symbol) {
           name: undefined,
           data: undefined
         });
-        console.log ("Fetch error:", err);
+        console.log ('Fetch error:', err);
         broadcast ();
       }
     });
@@ -136,8 +136,8 @@ function addStock (symbol) {
 function broadcast () {
   process.nextTick (() => {
     if (io) {
-      console.log ("broadcast", stocks.length, "tracked stocks");
-      io.emit ("update", JSON.stringify (stocks));
+      console.log ('broadcast', stocks.length, 'tracked stocks');
+      io.emit ('update', JSON.stringify (stocks));
 
       // clean up any error records after each broadcast
       stocks = stocks.filter (a => { return a.status === 0; });

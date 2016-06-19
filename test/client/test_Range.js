@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import React from 'react';
 import {createRenderer} from 'react-addons-test-utils';
 import expect from 'expect';
