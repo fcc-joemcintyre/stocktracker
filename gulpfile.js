@@ -39,7 +39,7 @@ gulp.task ('watch', function () {
   gulp.watch ('src/client/index.html', ['html']);
   gulp.watch ('src/server/*.js', ['server']);
   gulp.watch (dependencies, ['vendor']);
-  gulp.watch ('src/client/css/*.sass', ['styles']);
+  gulp.watch ('src/client/css/*.scss', ['styles']);
 });
 
 // copy index.html and favicon.ico
@@ -67,7 +67,7 @@ gulp.task ('vendor', function () {
 
 // compile stylesheets
 gulp.task ('styles', function () {
-  return gulp.src ('src/client/css/main.sass')
+  return gulp.src ('src/client/css/main.scss')
     .pipe (sass ().on ('error', sass.logError))
     .pipe (cssmin ())
     .pipe (gulp.dest (base + '/public/css'));
