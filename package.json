@@ -46,7 +46,7 @@
     "gulp-uglify": "1.5.3",
     "gulp-util": "3.0.7",
     "istanbul": "0.4.3",
-    "mocha": "2.5.3",
+    "mocha": "3.0.1",
     "nodemon": "1.9.2",
     "react-addons-test-utils": "15.1.0",
     "vinyl-buffer": "1.0.0",
