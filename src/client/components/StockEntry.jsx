@@ -1,39 +1,47 @@
 /**
- * Copyright (c) Joe McIntyre, 2016
+ * Copyright (c) Joe McIntyre, 2016-2018
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default class StockEntry extends React.Component {
+export class StockEntry extends Component {
   constructor (props) {
     super (props);
     this.state = {
-      symbol: ''
-    }
+      symbol: '',
+    };
     this.onChange = this.onChange.bind (this);
     this.onSubmit = this.onSubmit.bind (this);
   }
 
   onChange (event) {
-    this.setState ({symbol:event.target.value});
+    this.setState ({ symbol: event.target.value });
   }
 
   onSubmit (event) {
     event.preventDefault ();
-    let symbol = this.state.symbol.trim ().toUpperCase ();
+    const symbol = this.state.symbol.trim ().toUpperCase ();
     this.props.addStock (symbol);
-    this.setState ({symbol: ''});
+    this.setState ({ symbol: '' });
   }
 
-  render() {
+  render () {
     return (
       <form className='entryBox' onSubmit={this.onSubmit}>
         <label id='symbolText'>Symbol:</label>
-        <input type='text' id='symbolText' className='entryText' value={this.state.symbol} onChange={this.onChange}/>
-        <input type='submit' className='entryButton'
+        <input type='text' id='symbolText' className='entryText' value={this.state.symbol} onChange={this.onChange} />
+        <input
+          type='submit'
+          className='entryButton'
           disabled={(this.state.symbol === '')}
-          value='Track'/>
+          value='Track'
+        />
       </form>
     );
   }
 }
+
+StockEntry.propTypes = {
+  addStock: PropTypes.func.isRequired,
+};

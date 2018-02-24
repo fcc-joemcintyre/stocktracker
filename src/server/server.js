@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Joe McIntyre, 2016
+ * Copyright (c) Joe McIntyre, 2016-2018
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-'use strict';
 const express = require ('express');
 const bodyParser = require ('body-parser');
 const path = require ('path');
@@ -13,24 +12,31 @@ const listener = require ('./listener');
 
 /**
  * Start the Stock Tracker server.
+ * @param {number} port Server port to listen on
+ * @return {void}
  */
 function start (port) {
   console.log ('Starting Stock Tracker server');
 
-  // initialize and start server
-  let app = express ();
-  app.use (bodyParser.json ());
-  app.use (bodyParser.urlencoded ({extended:false}));
-  app.use (express.static (path.join (__dirname, 'public')));
+  try {
+    // initialize and start server
+    const app = express ();
+    app.use (bodyParser.json ());
+    app.use (bodyParser.urlencoded ({ extended: false }));
+    app.use (express.static (path.join (__dirname, 'public')));
 
-  let server = http.createServer (app);
-  let io = socketio.listen (server);
+    const server = http.createServer (app);
+    const io = socketio.listen (server);
 
-  listener.init (io);
-  routes.init (app, listener);
-  server.listen (port);
-
-  console.log ('Stock Tracker server listening on port ' + port);
+    listener.init (io);
+    routes.init (app, listener);
+    server.listen (port, () => {
+      console.log (`Stock Tracker server listening on port ${port}`);
+    });
+  } catch (err) {
+    console.log ('ERROR Server startup', err);
+    process.exit (1);
+  }
 }
 
 exports.start = start;

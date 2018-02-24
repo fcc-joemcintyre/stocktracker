@@ -1,42 +1,32 @@
 /**
- * Copyright (c) Joe McIntyre, 2016
+ * Copyright (c) Joe McIntyre, 2016-2018
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 
-/**
+/*
  * Outstanding requests and error status display.
  */
-export default class Status extends React.Component {
-  constructor (props) {
-    super (props);
-  }
-
-  render() {
-    return (
-      <div className='statusBox'>
-        <div>
-          Pending requests: {this.props.requests.length > 0
-              ? this.props.requests.join (',')
-              : 'none'}
-        </div>
-        <div>Errors: {this.props.errors.length > 0
-            ? this.props.errors.join (',')
-            : 'none'}
-        </div>
-      </div>
-    );
-  }
-}
+export const Status = ({ requests, errors }) => (
+  <div className='statusBox'>
+    <div>
+      Pending requests: {requests.length > 0 ? requests.join (',') : 'none'}
+    </div>
+    <div>
+      Errors: {errors.length > 0 ? errors.join (',') : 'none'}
+    </div>
+  </div>
+);
 
 Status.propTypes = {
   // stock symbols of outstanding requests
-  requests: React.PropTypes.arrayOf (React.PropTypes.string),
+  requests: PropTypes.arrayOf (PropTypes.string),
   // errors in format [Stock: symbol Error:# (message)]
-  errors: React.PropTypes.arrayOf (React.PropTypes.string)
-}
+  errors: PropTypes.arrayOf (PropTypes.string),
+};
 
 Status.defaultProps = {
   requests: [],
-  errors:[]
-}
+  errors: [],
+};

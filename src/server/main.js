@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Joe McIntyre, 2016
+ * Copyright (c) Joe McIntyre, 2016-2018
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-'use strict';
 const processCommand = require ('./cmd').processCommand;
 const server = require ('./server');
 
@@ -12,6 +11,7 @@ if (require.main === module) {
 
 /**
  * Process command line to start server.
+ * @return {void}
  */
 function main () {
   const command = processCommand (process.argv.slice (2));
@@ -19,6 +19,6 @@ function main () {
     process.exit (command.code);
   }
 
-  let port = process.env.PORT || command.port;
+  const port = process.env.PORT || command.port;
   server.start (port);
 }

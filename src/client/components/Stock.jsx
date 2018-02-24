@@ -1,24 +1,24 @@
 /**
- * Copyright (c) Joe McIntyre, 2016
+ * Copyright (c) Joe McIntyre, 2016-2018
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default class Stock extends React.Component {
+export class Stock extends Component {
   constructor (props) {
     super (props);
     this.onRemove = this.onRemove.bind (this);
   }
 
   onRemove () {
-    console.log ('onRemove', this.props.symbol);
     this.props.removeStock (this.props.symbol);
   }
 
-  render() {
+  render () {
     return (
       <div className='stockBox'>
-        <div className='stockColor' style={{backgroundColor:this.props.color}}></div>
+        <div className='stockColor' style={{ backgroundColor: this.props.color }} />
         <div className='stockBody'>
           <div className='stockSymbol'>{this.props.symbol}</div>
           <div className='stockName'>{this.props.name}</div>
@@ -28,3 +28,10 @@ export default class Stock extends React.Component {
     );
   }
 }
+
+Stock.propTypes = {
+  name: PropTypes.string.isRequired,
+  symbol: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  removeStock: PropTypes.func.isRequired,
+};
