@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
+import io from 'socket.io-client';
 import Titlebar from './Titlebar.jsx';
 import Range from './Range.jsx';
 import StockChart from './StockChart.jsx';

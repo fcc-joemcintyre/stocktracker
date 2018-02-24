@@ -15,7 +15,7 @@ let dependencies = [
   'react',
   'react-dom',
   'd3',
-  'socket.io',
+  'socket.io-client',
   'react-faux-dom'
 ];
 let stageDir = '../stocktracker-stage';
