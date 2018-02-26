@@ -2,17 +2,37 @@
  * Copyright (c) Joe McIntyre, 2016-2018
  * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
  */
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import d3 from 'd3';
-import ReactFauxDOM from 'react-faux-dom';
+import * as d3 from 'd3';
 import { dateOffset } from './util';
 
 // array indexes for stock data
 const DATE = 0;
 const CLOSE = 11;
 
-export const StockChart = ({ stocks, months, width, height }) => {
+export class StockChart extends Component {
+  componentDidMount () {
+    draw (this.node, this.props.stocks, this.props.months, this.props.width, this.props.height);
+  }
+
+  componentDidUpdate () {
+    d3.select (this.node).selectAll ('*').remove ();
+    draw (this.node, this.props.stocks, this.props.months, this.props.width, this.props.height);
+  }
+
+  render () {
+    return (
+      <svg
+        ref={node => (this.node = node)} // eslint-disable-line
+        height={this.props.height}
+        width={this.props.width}
+      />
+    );
+  }
+}
+
+function draw (node, stocks, months, width, height) {
   // set shell rendering flag for empty dataset
   const noData = (stocks.length === 0);
 
@@ -25,7 +45,7 @@ export const StockChart = ({ stocks, months, width, height }) => {
       stock.data.forEach ((d) => {
         if (typeof (d[DATE]) === 'string') {
           // eslint-disable-next-line no-param-reassign
-          d[DATE] = d3.time.format ('%Y-%m-%d').parse (d[DATE]);
+          d[DATE] = new Date (d[DATE]);
         }
       });
 
@@ -46,36 +66,23 @@ export const StockChart = ({ stocks, months, width, height }) => {
   let maxDate = new Date ();
   let minDate = new Date ();
   minDate.setFullYear (maxDate.getFullYear () - 3);
-  let min = 0;
-  let max = 100;
+  let maxPrice = 100;
 
   // set x scale by date, y scale by closing price
   if (! noData) {
     const data = items[0].data;
     minDate = new Date (data[0][DATE]);
     maxDate = new Date (data[data.length - 1][DATE]);
-
-    min = d3.min (items, d1 => d3.min (d1.data, d2 => d2[CLOSE]));
-    max = d3.max (items, d1 => d3.max (d1.data, d2 => d2[CLOSE]));
+    maxPrice = d3.max (items, d1 => d3.max (d1.data, d2 => d2[CLOSE]));
   }
 
-  const xScale = d3.time.scale ()
+  const xScale = d3.scaleTime ()
     .domain ([minDate, maxDate])
-    .range ([0, contentWidth]);
-  const yScale = d3.scale.linear ()
-    .domain ([min, max])
-    .range ([contentHeight, 0]);
+    .rangeRound ([0, contentWidth]);
+  const yScale = d3.scaleLinear ()
+    .domain ([0, maxPrice * 1.1])
+    .rangeRound ([contentHeight, 0]);
 
-  // define x and y axis
-  const xAxis = d3.svg.axis ()
-    .scale (xScale)
-    .orient ('bottom');
-  const yAxis = d3.svg.axis ()
-    .scale (yScale)
-    .orient ('left');
-
-  // create svg parent element
-  const node = ReactFauxDOM.createElement ('svg');
   const chart = d3.select (node)
     .attr ('width', contentWidth + margin.left + margin.right)
     .attr ('height', contentHeight + margin.top + margin.bottom)
@@ -86,17 +93,18 @@ export const StockChart = ({ stocks, months, width, height }) => {
   // add x and y axis
   chart.append ('g')
     .attr ('class', 'x axis')
-    .attr ('transform', `translate (0,${contentHeight})`)
-    .call (xAxis);
+    .attr ('transform', `translate (0, ${contentHeight})`)
+    .call (d3.axisBottom (xScale))
+    .select ('.domain')
+    .remove ();
   chart.append ('g')
     .attr ('class', 'y axis')
-    .call (yAxis);
+    .call (d3.axisLeft (yScale));
 
   // line point calculation
-  const line = d3.svg.line ()
+  const line = d3.line ()
     .x (d => xScale (d[DATE]))
-    .y (d => yScale (d[CLOSE]))
-    .interpolate ('basis');
+    .y (d => yScale (d[CLOSE]));
 
   // add a bar for each quarter, with hover tooltip
   if (! noData) {
@@ -125,13 +133,7 @@ export const StockChart = ({ stocks, months, width, height }) => {
     .attr ('text-anchor', 'middle')
     .attr ('transform', 'translate(-40, 60) rotate(-90)')
     .text ('Closing price');
-
-  return (
-    <div style={{ width, height }}>
-      {node.toReact ()}
-    </div>
-  );
-};
+}
 
 /*
  * Setup mouse tracking for the chart, displaying a vertical line and
