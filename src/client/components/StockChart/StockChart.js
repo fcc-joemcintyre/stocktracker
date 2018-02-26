@@ -1,11 +1,7 @@
-/**
- * Copyright (c) Joe McIntyre, 2016-2018
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
-import { dateOffset } from './util';
+import { dateOffset } from '../../util/dateOffset';
 
 // array indexes for stock data
 const DATE = 0;
@@ -33,47 +29,25 @@ export class StockChart extends Component {
 }
 
 function draw (node, stocks, months, width, height) {
+  if (node === null) {
+    return;
+  }
+
   // set shell rendering flag for empty dataset
   const noData = (stocks.length === 0);
-
-  // extract chart stock data from dataset
-  const items = [];
-  if (! noData) {
-    const startDate = dateOffset (new Date (), months);
-    for (const stock of stocks) {
-      // adjust date format
-      stock.data.forEach ((d) => {
-        if (typeof (d[DATE]) === 'string') {
-          // eslint-disable-next-line no-param-reassign
-          d[DATE] = new Date (d[DATE]);
-        }
-      });
-
-      items.push ({
-        symbol: stock.symbol,
-        name: stock.name,
-        color: stock.color,
-        data: stock.data.filter (d => (d[DATE] > startDate)),
-      });
-    }
-  }
 
   const margin = { top: 10, right: 10, bottom: 60, left: 80 };
   const contentWidth = width - margin.left - margin.right;
   const contentHeight = height - margin.top - margin.bottom;
 
   // set default x and y axis values if no data
-  let maxDate = new Date ();
-  let minDate = new Date ();
-  minDate.setFullYear (maxDate.getFullYear () - 3);
+  const minDate = dateOffset (new Date (), months);
+  const maxDate = new Date ();
   let maxPrice = 100;
 
   // set x scale by date, y scale by closing price
   if (! noData) {
-    const data = items[0].data;
-    minDate = new Date (data[0][DATE]);
-    maxDate = new Date (data[data.length - 1][DATE]);
-    maxPrice = d3.max (items, d1 => d3.max (d1.data, d2 => d2[CLOSE]));
+    maxPrice = d3.max (stocks, d1 => d3.max (d1.data, d2 => d2[CLOSE]));
   }
 
   const xScale = d3.scaleTime ()
@@ -109,15 +83,16 @@ function draw (node, stocks, months, width, height) {
   // add a bar for each quarter, with hover tooltip
   if (! noData) {
     // set up mouse tracker for vertical line and tooltip display
-    setupMouseTracker (chart, items, margin, contentWidth, contentHeight, xScale);
+    setupMouseTracker (chart, stocks, margin, contentWidth, contentHeight, xScale);
 
     // chart each stock
-    for (const stock of items) {
+    for (const stock of stocks) {
       chart.append ('path')
-        .datum (stock.data)
-        .attr ('class', 'line')
-        .attr ('d', line)
-        .attr ('stroke', stock.color);
+        .datum (stock.data.filter (a => (a[DATE] >= minDate)))
+        .attr ('fill', 'none')
+        .attr ('stroke', stock.color)
+        .attr ('stroke-width', 1.5)
+        .attr ('d', line);
     }
   }
 
@@ -165,36 +140,38 @@ function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
     const bisect = d3.bisector (d => d[0]).left;
     const index = bisect (stocks[0].data, x, 1);
 
-    // populate tooltip content
-    const date = stocks[0].data[index][0];
-    let text = `${date.getFullYear ()}-${date.getMonth () + 1}-${date.getDate ()}`;
-    for (const stock of stocks) {
-      if (stock.data[index]) {
-        text += `<br/>${stock.symbol}: ${stock.data[index][CLOSE].toFixed (2)}`;
+    if (stocks[0].data[index]) {
+      // populate tooltip content
+      const date = stocks[0].data[index][0];
+      let text = `${date.getFullYear ()}-${date.getMonth () + 1}-${date.getDate ()}`;
+      for (const stock of stocks) {
+        if (stock.data[index]) {
+          text += `<br/>${stock.symbol}: ${stock.data[index][CLOSE].toFixed (2)}`;
+        }
       }
-    }
-    tooltip.attr ('height', stocks.length * 14 + 4); // calc tooltip height
-    tooltip.transition ()
-      .duration (200)
-      .style ('opacity', 0.9);
-    tooltip.html (text)
-      .style ('left', `${(d3.event.pageX + 5)}px`)
-      .style ('top', `${(d3.event.pageY - 28)}px`);
-    tooltipLine
-      .style ('opacity', 0.9)
-      .style ('left', `${(d3.event.pageX)}px`);
-  })
-    .on ('mouseover', () => {
-      d3.selectAll ('.line_over').style ('display', 'block');
-    })
-    .on ('mouseout', () => {
-      d3.selectAll ('.line_over').style ('display', 'none');
+      tooltip.attr ('height', stocks.length * 14 + 4); // calc tooltip height
       tooltip.transition ()
-        .duration (500)
-        .style ('opacity', 0);
+        .duration (200)
+        .style ('opacity', 0.9);
+      tooltip.html (text)
+        .style ('left', `${(d3.event.pageX + 5)}px`)
+        .style ('top', `${(d3.event.pageY - 28)}px`);
       tooltipLine
-        .style ('opacity', 0);
-    });
+        .style ('opacity', 0.9)
+        .style ('left', `${(d3.event.pageX)}px`);
+    }
+  });
+  chart.on ('mouseover', () => {
+    d3.selectAll ('.line_over').style ('display', 'block');
+  });
+  chart.on ('mouseout', () => {
+    d3.selectAll ('.line_over').style ('display', 'none');
+    tooltip.transition ()
+      .duration (500)
+      .style ('opacity', 0);
+    tooltipLine
+      .style ('opacity', 0);
+  });
 
   // define mouse capture area for display area of chart. This is an
   // overlay, it has no visible content.

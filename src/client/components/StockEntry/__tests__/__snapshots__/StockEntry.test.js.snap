@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StockEntry initial display 1`] = `
+<form
+  className="entryBox"
+  onSubmit={[Function]}
+>
+  <label
+    htmlFor="symbolText"
+  >
+    Symbol:
+  </label>
+  <input
+    className="entryText"
+    id="symbolText"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <button
+    className="entryButton"
+    disabled={true}
+    type="submit"
+  >
+    Track
+  </button>
+</form>
+`;

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StockChart no stocks (snapshot) 1`] = `
+<svg
+  height={400}
+  width={600}
+/>
+`;

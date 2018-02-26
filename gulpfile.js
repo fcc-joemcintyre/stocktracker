@@ -25,8 +25,8 @@ const stageDir = '../stocktracker-stage';
 let base = 'dist';
 
 // setup default, local test and staging tasks
-gulp.task ('default', ['html', 'server', 'styles', 'vendor-dev', 'browserify-dev', 'watch']);
-gulp.task ('stage', ['set-stage', 'html', 'server', 'styles', 'vendor-stage', 'browserify-stage']);
+gulp.task ('default', ['public', 'server', 'styles', 'vendor-dev', 'browserify-dev', 'watch']);
+gulp.task ('stage', ['set-stage', 'public', 'server', 'styles', 'vendor-stage', 'browserify-stage']);
 
 // set the destination for staging output and copy stage root files
 gulp.task ('set-stage', function () {
@@ -37,15 +37,15 @@ gulp.task ('set-stage', function () {
 
 // set watch tasks for continous build
 gulp.task ('watch', function () {
-  gulp.watch ('src/client/index.html', ['html']);
+  gulp.watch ('src/client/public/*', ['html']);
   gulp.watch ('src/server/*.js', ['server']);
   gulp.watch (dependencies, ['vendor']);
   gulp.watch ('src/client/css/*.scss', ['styles']);
 });
 
-// copy index.html and favicon.ico
-gulp.task ('html', function () {
-  return gulp.src (['src/client/index.html', 'src/client/favicon.ico'])
+// copy files for the base public directory
+gulp.task ('public', function () {
+  return gulp.src ('src/client/public/*')
     .pipe (gulp.dest (`${base}/public`));
 });
 
@@ -77,7 +77,7 @@ gulp.task ('vendor-dev', function () {
 
 // compile and package application
 gulp.task ('browserify-dev', function () {
-  const config = { entries: 'src/client/components/App.jsx', debug: true };
+  const config = { entries: 'src/client/components/App/index.js', debug: true };
   const bundler = watchify (browserify (config, watchify.args));
   bundler.external (dependencies);
   bundler.transform (babelify, { presets: [
@@ -131,7 +131,7 @@ gulp.task ('vendor-stage', function () {
 
 gulp.task ('browserify-stage', function () {
   process.env.NODE_ENV = 'production';
-  const bundler = browserify ({ entries: 'src/client/components/App.jsx', debug: true });
+  const bundler = browserify ({ entries: 'src/client/components/App/index.js', debug: true });
   bundler.external (dependencies);
   bundler.transform (babelify, { presets: [
     ['env', {

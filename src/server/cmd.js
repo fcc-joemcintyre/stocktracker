@@ -1,9 +1,4 @@
 /**
- * Copyright (c) Joe McIntyre, 2016-2018
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
-
-/**
  * Parse a string to an integer, returning null if not an integer
  * @param {String} value String to convert
  * @returns {Number} Converted number, or null

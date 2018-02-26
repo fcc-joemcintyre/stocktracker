@@ -1,7 +1,3 @@
-/**
- * Copyright (c) Joe McIntyre, 2016-2018
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,7 +8,7 @@ export class Stock extends Component {
   }
 
   onRemove () {
-    this.props.removeStock (this.props.symbol);
+    this.props.onRemoveStock (this.props.symbol);
   }
 
   render () {
@@ -33,5 +29,5 @@ Stock.propTypes = {
   name: PropTypes.string.isRequired,
   symbol: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  removeStock: PropTypes.func.isRequired,
+  onRemoveStock: PropTypes.func.isRequired,
 };

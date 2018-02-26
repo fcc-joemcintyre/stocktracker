@@ -20,29 +20,26 @@
     "socket.io-client": "2.0.4"
   },
   "scripts": {
-    "test": "npm run test-client && npm run test-server",
-    "test-client": "mocha --compilers js:babel-core/register test/client/**/*.js",
-    "test-server": "mocha test/server/test-main.js",
+    "test": "jest",
+    "integration-test": "mocha test/server/test-main.js",
     "start": "nodemon dist/main.js --port=3000",
     "build": "gulp",
     "build-stage": "gulp stage",
-    "lint": "eslint --ext .js --ext .jsx src/** && eslint test/**",
-    "coverage": "npm run c-server && npm run c-combine",
-    "c-server": "./node_modules/istanbul/lib/cli.js cover --dir ./coverage/server ./node_modules/mocha/bin/_mocha test/server/test-main.js -- -R spec",
-    "c-combine": "./node_modules/istanbul/lib/cli.js report --dir ./coverage --include **/*coverage.json json lcov"
+    "lint": "eslint --ext .js --ext .jsx src/** && eslint test/**"
   },
   "devDependencies": {
-    "@cygns/eslint-config": "2.0.0",
+    "@cygns/eslint-config": "2.1.0",
     "babel-core": "6.26.0",
+    "babel-jest": "22.4.1",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "babelify": "8.0.0",
     "browserify": "16.1.0",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
     "eslint": "4.18.1",
     "eslint-plugin-import": "2.9.0",
     "eslint-plugin-react": "7.7.0",
-    "expect": "1.20.1",
-    "expect-jsx": "2.6.0",
     "gulp": "3.9.1",
     "gulp-babel-minify": "0.3.0",
     "gulp-cssmin": "0.2.0",
@@ -50,8 +47,9 @@
     "gulp-sass": "3.1.0",
     "gulp-sourcemaps": "2.6.4",
     "gulp-util": "3.0.8",
-    "istanbul": "0.4.3",
+    "jest": "22.4.2",
     "mocha": "3.0.1",
+    "mock-socket": "7.1.0",
     "nodemon": "1.15.1",
     "react-test-renderer": "16.2.0",
     "vinyl-buffer": "1.0.1",
@@ -60,5 +58,15 @@
   },
   "engines": {
     "node": "8.9.3"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./src/test/setup.js",
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "html"
+    ]
   }
 }

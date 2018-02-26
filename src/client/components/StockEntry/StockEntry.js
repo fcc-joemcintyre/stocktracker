@@ -1,7 +1,3 @@
-/**
- * Copyright (c) Joe McIntyre, 2016-2018
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -22,26 +18,27 @@ export class StockEntry extends Component {
   onSubmit (event) {
     event.preventDefault ();
     const symbol = this.state.symbol.trim ().toUpperCase ();
-    this.props.addStock (symbol);
+    this.props.onAddStock (symbol);
     this.setState ({ symbol: '' });
   }
 
   render () {
     return (
       <form className='entryBox' onSubmit={this.onSubmit}>
-        <label id='symbolText'>Symbol:</label>
+        <label htmlFor='symbolText'>Symbol:</label>
         <input type='text' id='symbolText' className='entryText' value={this.state.symbol} onChange={this.onChange} />
-        <input
+        <button
           type='submit'
           className='entryButton'
           disabled={(this.state.symbol === '')}
-          value='Track'
-        />
+        >
+          Track
+        </button>
       </form>
     );
   }
 }
 
 StockEntry.propTypes = {
-  addStock: PropTypes.func.isRequired,
+  onAddStock: PropTypes.func.isRequired,
 };

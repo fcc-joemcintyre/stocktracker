@@ -23,12 +23,12 @@ The application can be used at https://stocktracker-jm.herokuapp.com
 
 ## Development setup
 
-Clone the *Github* repo, then install the dependencies using *npm*.
+Clone the *Github* repo, then install the dependencies using *yarn* or *npm*.
 
 ```
 git clone https://github.com/fcc-joemcintyre/stocktracker.git
 cd stocktracker
-npm install
+yarn (or npm install)
 ```
 
 ### Build
@@ -36,7 +36,7 @@ npm install
 In a terminal, build can be activated with
 
 ```
-npm run [build | build-stage]
+yarn [build | build-stage] (or npm run [build | build-stage])
 ```
 
 The build uses *gulp* to run the set of tasks defined in *gulpfile.js*. The
@@ -51,17 +51,16 @@ set up watches and rerun build elements as file changes are saved.
 
 ## Testing
 
-Testing can be done for all components,
+Unit testing can be done for all components,
 
 ```
-npm test
+yarn test (or npm test)
 ```
 
-Or components individually,
+Integration testing can be done using,
 
 ```
-npm run test-client
-npm run test-server
+yarn integration-test (or npm run integration-test)
 ```
 
 ### Coverage
@@ -69,15 +68,11 @@ npm run test-server
 Coverage reports are generated using,
 
 ```
-npm run coverage
+yarn test --coverage (or npm test -- --coverage)
 ```
 
-Multiple coverage runs are performed, and then a final coverage run combines
-the separate results. The final report is available in
-*coverage/lcov-report/index.html*
-
-Results for the individual runs are available in the subdirectories under the
-*coverage* directory.
+The coverage report will be available from
+*coverage/index.html*
 
 ### Server
 
@@ -85,7 +80,7 @@ In a terminal, continuous server operation, updating on changes,
 can be activated with
 
 ```
-npm start
+yarn start (or npm start)
 ```
 
 The *nodemon* utility provides restart on update.

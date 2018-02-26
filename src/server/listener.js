@@ -1,7 +1,3 @@
-/**
- * Copyright (c) Joe McIntyre, 2016-2018
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
 const request = require ('request');
 
 // socket.io and stock data

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stock displays its content 1`] = `
+<div
+  className="stockBox"
+>
+  <div
+    className="stockColor"
+    style={
+      Object {
+        "backgroundColor": "#0000ff",
+      }
+    }
+  />
+  <div
+    className="stockBody"
+  >
+    <div
+      className="stockSymbol"
+    >
+      GE
+    </div>
+    <div
+      className="stockName"
+    >
+      General Electric
+    </div>
+  </div>
+  <div
+    className="stockRemove"
+    onClick={[Function]}
+  >
+    X
+  </div>
+</div>
+`;

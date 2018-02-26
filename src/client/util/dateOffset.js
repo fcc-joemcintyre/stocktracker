@@ -1,9 +1,4 @@
 /**
- * Copyright (c) Joe McIntyre, 2016-2018
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
-
-/**
  * Calculate a date in the past by a number of months.
  * @param {Date} date Starting date
  * @param {number} monthsAgo Number of months to go back

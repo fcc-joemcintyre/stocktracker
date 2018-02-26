@@ -1,18 +1,8 @@
-/**
- * Copyright (c) Joe McIntyre, 2016-2018
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import io from 'socket.io-client';
-import { Titlebar } from './Titlebar.jsx';
-import { Range } from './Range.jsx';
-import { StockChart } from './StockChart.jsx';
-import { Stock } from './Stock.jsx';
-import { StockEntry } from './StockEntry.jsx';
-import { Status } from './Status.jsx';
+import { Page } from './Page';
 
-export default class App extends Component {
+export class App extends Component {
   constructor (props) {
     super (props);
     this.state = {
@@ -20,15 +10,13 @@ export default class App extends Component {
       retrieving: [],
       data: [],
       months: 12,
-      colors: ['blue', 'green', 'lightblue', 'lightgreen', 'purple', 'orange',
-        'lightpurple', 'steelblue'],
       chartKey: 1,
     };
-    this.addStock = this.addStock.bind (this);
-    this.server = this.server.bind (this);
-    this.removeStock = this.removeStock.bind (this);
-    this.update = this.update.bind (this);
     this.onRangeChanged = this.onRangeChanged.bind (this);
+    this.onAddStock = this.onAddStock.bind (this);
+    this.onRemoveStock = this.onRemoveStock.bind (this);
+    this.server = this.server.bind (this);
+    this.update = this.update.bind (this);
   }
 
   /**
@@ -56,10 +44,19 @@ export default class App extends Component {
    * @param {string} symbol Stock trading symbol
    * @return {void}
    */
-  addStock (symbol) {
+  onAddStock (symbol) {
     this.server ('PUT', symbol);
     this.state.retrieving.push (symbol);
     this.forceUpdate ();
+  }
+
+  /**
+   * Remove stock from interest (remove from retrieving or monitored set).
+   * @param {string} symbol Stock trading symbol
+   * @return {void}
+   */
+  onRemoveStock (symbol) {
+    this.server ('DELETE', symbol);
   }
 
   /**
@@ -80,15 +77,6 @@ export default class App extends Component {
     });
     req.open (action, `api/stocks/${symbol}`, true);
     req.send ();
-  }
-
-  /**
-   * Remove stock from interest (remove from retrieving or monitored set).
-   * @param {string} symbol Stock trading symbol
-   * @return {void}
-   */
-  removeStock (symbol) {
-    this.server ('DELETE', symbol);
   }
 
   /**
@@ -122,9 +110,15 @@ export default class App extends Component {
         }
         return true;
       });
+      // convert dates in data itmes to Date objects
+      const translated = filtered.map (
+        a => Object.assign ({}, a, { data: a.data.map (
+          b => Object.assign ({}, b, { 0: new Date (b[0]) })
+        ) })
+      );
       return ({
         retrieving,
-        data: filtered,
+        data: translated,
         errors,
         chartKey: prev.chartKey + 1,
       });
@@ -132,46 +126,17 @@ export default class App extends Component {
   }
 
   render () {
-    const stocks = [];
-    let color = 0;
-    for (const item of this.state.data) {
-      // assign color to item
-      item.color = this.state.colors[color];
-      stocks.push (
-        <Stock
-          key={item.symbol}
-          symbol={item.symbol}
-          name={item.name}
-          color={item.color}
-          removeStock={this.removeStock}
-        />
-      );
-      color += 1;
-    }
-
-    // if not all tracking slots (8) are taken, show entry component
-    const stockEntry = (stocks.length < 8) ? <StockEntry addStock={this.addStock} /> : null;
-
     return (
-      <div>
-        <Titlebar />
-        <Range months={this.state.months} onRangeChanged={this.onRangeChanged} />
-        <StockChart
-          key={this.state.chartKey}
-          className='stockChart'
-          width={900}
-          height={500}
-          months={this.state.months}
-          stocks={this.state.data}
-        />
-        <div className='stockArea'>
-          {stocks}
-          {stockEntry}
-        </div>
-        <Status requests={this.state.retrieving} errors={this.state.errors} />
-      </div>
+      <Page
+        data={this.state.data}
+        months={this.state.months}
+        retrieving={this.state.retrieving}
+        errors={this.state.errors}
+        chartKey={this.state.chartKey}
+        onRangeChanged={this.onRangeChanged}
+        onAddStock={this.onAddStock}
+        onRemoveStock={this.onRemoveStock}
+      />
     );
   }
 }
-
-render (<App />, document.getElementById ('app'));

@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Range has default selection (1yr) 1`] = `
+<div
+  className="rangeBox"
+>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    1m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    3m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    6m
+  </span>
+  <span
+    className="selected"
+    onClick={[Function]}
+  >
+    1y
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    3y
+  </span>
+</div>
+`;
+
+exports[`Range has minimum selection (1m) 1`] = `
+<div
+  className="rangeBox"
+>
+  <span
+    className="selected"
+    onClick={[Function]}
+  >
+    1m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    3m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    6m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    1y
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    3y
+  </span>
+</div>
+`;
+
+exports[`Range has minimum selection (36m) 1`] = `
+<div
+  className="rangeBox"
+>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    1m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    3m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    6m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    1y
+  </span>
+  <span
+    className="selected"
+    onClick={[Function]}
+  >
+    3y
+  </span>
+</div>
+`;
+
+exports[`Range has set selection (3m) 1`] = `
+<div
+  className="rangeBox"
+>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    1m
+  </span>
+  <span
+    className="selected"
+    onClick={[Function]}
+  >
+    3m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    6m
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    1y
+  </span>
+  <span
+    className=""
+    onClick={[Function]}
+  >
+    3y
+  </span>
+</div>
+`;
