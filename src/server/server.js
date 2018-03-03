@@ -6,6 +6,9 @@ const socketio = require ('socket.io');
 const routes = require ('./routes');
 const listener = require ('./listener');
 
+let server;
+let io;
+
 /**
  * Start the Stock Tracker server.
  * @param {number} port Server port to listen on
@@ -21,8 +24,8 @@ function start (port) {
     app.use (bodyParser.urlencoded ({ extended: false }));
     app.use (express.static (path.join (__dirname, 'public')));
 
-    const server = http.createServer (app);
-    const io = socketio.listen (server);
+    server = http.createServer (app);
+    io = socketio.listen (server);
 
     listener.init (io);
     routes.init (app, listener);
@@ -35,4 +38,15 @@ function start (port) {
   }
 }
 
+function stop () {
+  return new Promise ((resolve) => {
+    if (server) {
+      server.close (() => {
+        resolve ();
+      });
+    }
+  });
+}
+
 exports.start = start;
+exports.stop = stop;

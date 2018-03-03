@@ -1,7 +1,3 @@
-/**
- * Copyright (c) Joe McIntyre, 2016
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
 const assert = require ('assert');
 const processCommand = require ('../../dist/cmd').processCommand;
 

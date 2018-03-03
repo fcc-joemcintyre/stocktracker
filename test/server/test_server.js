@@ -1,12 +1,12 @@
-/**
- * Copyright (c) Joe McIntyre, 2016
- * license: MIT (https://github.com/fcc-joemcintyre/stocktracker/LICENSE.txt)
- */
 const request = require ('request');
 const server = require ('../../dist/server');
 
 before (function () {
   server.start (3999);
+});
+
+after (async function () {
+  await server.stop ();
 });
 
 describe ('test server', function () {
