@@ -39,13 +39,12 @@ In a terminal, build can be activated with
 yarn [build | build-stage] (or npm run [build | build-stage])
 ```
 
-The build uses *gulp* to run the set of tasks defined in *gulpfile.js*. The
-build options are,
+The build uses *Webpack* to run the set of build tasks. The build options are,
 
 - build: regular build
 - build-stage: build application ready to be deployed to Heroku or similar
 
-*build* is a continuous build option - the gulp build will
+*build* is a continuous build option - the build will
 set up watches and rerun build elements as file changes are saved.
 *build-stage* is a one time build option, run again to build a new stage output.
 
@@ -60,7 +59,7 @@ yarn test (or npm test)
 Integration testing can be done using,
 
 ```
-yarn integration-test (or npm run integration-test)
+yarn test-int (or npm run integration-test)
 ```
 
 ### Coverage

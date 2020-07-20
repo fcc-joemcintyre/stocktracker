@@ -1,5 +1,5 @@
-const assert = require ('assert');
-const processCommand = require ('../../dist/cmd').processCommand;
+import * as assert from 'assert';
+import { processCommand } from '../../src/server/cmd.js';
 
 describe ('Test command line processing', function () {
   describe ('empty command', function () {

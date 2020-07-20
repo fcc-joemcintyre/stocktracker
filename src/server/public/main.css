@@ -1,0 +1,59 @@
+.titlebar {
+  height: 32px;
+  background-color: green;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.title {
+  font-family: 'sans-serif';
+  font-size: 24px;
+  color: white;
+  margin: 4px 0 4px 4px;
+}
+
+svg text {
+  font-family: sans-serif;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  width: 1;
+}
+
+.g_chart {
+  cursor: default;
+  pointer-events: all;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 100px;
+  overflow: auto;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.tooltip-line {
+  position: absolute;
+  width: 1px;
+  top: 84px;
+  height: 440;
+  background: lightgray;
+  cursor: default;
+  pointer-events: none;
+}

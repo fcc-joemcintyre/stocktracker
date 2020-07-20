@@ -2,33 +2,63 @@
 
 exports[`Stock displays its content 1`] = `
 <div
-  className="stockBox"
+  style={
+    Object {
+      "border": "1px solid darkgray",
+      "display": "flex",
+      "height": "68px",
+      "margin": "8px 8px 16px 0",
+      "width": "200px",
+    }
+  }
 >
   <div
-    className="stockColor"
     style={
       Object {
         "backgroundColor": "#0000ff",
+        "height": "100%",
+        "width": "10px",
       }
     }
   />
   <div
-    className="stockBody"
+    style={
+      Object {
+        "height": "100%",
+        "padding": "4px",
+        "width": "100%",
+      }
+    }
   >
     <div
-      className="stockSymbol"
+      style={
+        Object {
+          "fontSize": "24px",
+        }
+      }
     >
       GE
     </div>
     <div
-      className="stockName"
+      style={
+        Object {
+          "fontSize": "16px",
+        }
+      }
     >
       General Electric
     </div>
   </div>
   <div
-    className="stockRemove"
+    id="stock-remove"
     onClick={[Function]}
+    style={
+      Object {
+        "color": "red",
+        "cursor": "pointer",
+        "textAlign": "center",
+      }
+    }
   >
     X
   </div>

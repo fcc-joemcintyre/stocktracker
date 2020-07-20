@@ -14,7 +14,7 @@ function getInteger (value) {
  * @param {[String]} args Array of arguments
  * @returns {Object} code:{Integer}, exit:{Boolean}, port:{Integer}
  */
-function processCommand (args) {
+export function processCommand (args) {
   let showHelp = false;
   const errors = [];
   const defaults = {
@@ -37,12 +37,10 @@ function processCommand (args) {
       } else {
         errors.push (`Error: Invalid option (${elements[0]})`);
       }
+    } else if (arg === '-h' || arg === '--help') {
+      showHelp = true;
     } else {
-      if (arg === '-h' || arg === '--help') {
-        showHelp = true;
-      } else {
-        errors.push (`Error: Invalid option (${arg})`);
-      }
+      errors.push (`Error: Invalid option (${arg})`);
     }
   }
 
@@ -65,15 +63,13 @@ function processCommand (args) {
 
   // if help argument or errors, output usage message
   if ((showHelp === true) || (errors.length > 0)) {
-    console.log ( // eslint-disable-next-line indent
+    const message =
 `Usage: stocktracker [-p=port] [-h]
   -p or --port      Port number to listen on. Default: ${defaults.port}
-  -h or --help      This message.`
-    );
+  -h or --help      This message.`;
+    console.log (message);
     result.code = (showHelp) ? 0 : 1;
     result.exit = true;
   }
   return result;
 }
-
-exports.processCommand = processCommand;

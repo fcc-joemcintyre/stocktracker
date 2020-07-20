@@ -1,32 +1,30 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
-import { dateOffset } from '../../util/dateOffset';
+import { dateOffset } from './dateOffset';
 
 // array indexes for stock data
 const DATE = 0;
 const CLOSE = 11;
 
-export class StockChart extends Component {
-  componentDidMount () {
-    draw (this.node, this.props.stocks, this.props.months, this.props.width, this.props.height);
-  }
+export const StockChart = ({ stocks, months, width, height }) => {
+  const node = useRef (null);
 
-  componentDidUpdate () {
-    d3.select (this.node).selectAll ('*').remove ();
-    draw (this.node, this.props.stocks, this.props.months, this.props.width, this.props.height);
-  }
+  useEffect (() => {
+    if (node.current) {
+      d3.select (node.current).selectAll ('*').remove ();
+      draw (node.current, stocks, months, width, height);
+    }
+  }, [stocks, months, width, height]);
 
-  render () {
-    return (
-      <svg
-        ref={node => (this.node = node)} // eslint-disable-line
-        height={this.props.height}
-        width={this.props.width}
-      />
-    );
-  }
-}
+  return (
+    <svg
+      ref={node}
+      height={height}
+      width={width}
+    />
+  );
+};
 
 function draw (node, stocks, months, width, height) {
   if (node === null) {
@@ -46,8 +44,8 @@ function draw (node, stocks, months, width, height) {
   let maxPrice = 100;
 
   // set x scale by date, y scale by closing price
-  if (! noData) {
-    maxPrice = d3.max (stocks, d1 => d3.max (d1.data, d2 => d2[CLOSE]));
+  if (!noData) {
+    maxPrice = d3.max (stocks, (d1) => d3.max (d1.data, (d2) => d2[CLOSE]));
   }
 
   const xScale = d3.scaleTime ()
@@ -77,18 +75,18 @@ function draw (node, stocks, months, width, height) {
 
   // line point calculation
   const line = d3.line ()
-    .x (d => xScale (d[DATE]))
-    .y (d => yScale (d[CLOSE]));
+    .x ((d) => xScale (d[DATE]))
+    .y ((d) => yScale (d[CLOSE]));
 
   // add a bar for each quarter, with hover tooltip
-  if (! noData) {
+  if (!noData) {
     // set up mouse tracker for vertical line and tooltip display
     setupMouseTracker (chart, stocks, margin, contentWidth, contentHeight, xScale);
 
     // chart each stock
     for (const stock of stocks) {
       chart.append ('path')
-        .datum (stock.data.filter (a => (a[DATE] >= minDate)))
+        .datum (stock.data.filter ((a) => (a[DATE] >= minDate)))
         .attr ('fill', 'none')
         .attr ('stroke', stock.color)
         .attr ('stroke-width', 1.5)
@@ -137,7 +135,7 @@ function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
   chart.on ('mousemove', () => {
     // calculate index item
     const x = xScale.invert (d3.event.pageX - margin.left - 8);
-    const bisect = d3.bisector (d => d[0]).left;
+    const bisect = d3.bisector ((d) => d[0]).left;
     const index = bisect (stocks[0].data, x, 1);
 
     if (stocks[0].data[index]) {
@@ -149,7 +147,7 @@ function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
           text += `<br/>${stock.symbol}: ${stock.data[index][CLOSE].toFixed (2)}`;
         }
       }
-      tooltip.attr ('height', stocks.length * 14 + 4); // calc tooltip height
+      tooltip.attr ('height', `${stocks.length * 14 + 4}px`); // calc tooltip height
       tooltip.transition ()
         .duration (200)
         .style ('opacity', 0.9);

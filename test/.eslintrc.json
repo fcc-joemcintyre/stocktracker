@@ -2,12 +2,15 @@
   "env": {
     "mocha": true
   },
-
   "rules": {
     "func-names": "off",
     "no-console": "off",
     "prefer-arrow-callback": "off",
-
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "import/extensions": ["error", "ignorePackages", {
+      "js": "always",
+      "mjs": "always",
+      "jsx": "always"
+    }]
   }
 }

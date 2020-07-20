@@ -2,7 +2,6 @@
 
 exports[`StockEntry initial display 1`] = `
 <form
-  className="entryBox"
   onSubmit={[Function]}
 >
   <label
@@ -10,15 +9,20 @@ exports[`StockEntry initial display 1`] = `
   >
     Symbol:
   </label>
+   
   <input
-    className="entryText"
     id="symbolText"
     onChange={[Function]}
+    style={
+      Object {
+        "width": "60px",
+      }
+    }
     type="text"
     value=""
   />
+   
   <button
-    className="entryButton"
     disabled={true}
     type="submit"
   >

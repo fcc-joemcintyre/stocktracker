@@ -19,7 +19,7 @@ test ('Remove stock event', () => {
   );
   expect (component.props ().onRemoveStock).toBeDefined ();
 
-  const button = component.find ('.stockRemove').first ();
+  const button = component.find ('#stock-remove').first ();
   expect (button).toBeDefined ();
 
   button.simulate ('click');

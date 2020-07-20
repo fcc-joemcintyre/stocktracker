@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
  * Outstanding requests and error status display.
  */
 export const Status = ({ requests, errors }) => (
-  <div className='statusBox'>
+  <div>
     <div>
       Pending requests: {requests.length > 0 ? requests.join (',') : 'none'}
     </div>

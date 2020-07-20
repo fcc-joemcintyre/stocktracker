@@ -1,15 +1,15 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Titlebar } from '../Titlebar';
-import { Range } from '../Range';
-import { StockChart } from '../StockChart';
-import { Stock } from '../Stock';
-import { StockEntry } from '../StockEntry';
-import { Status } from '../Status';
+import { Range } from '../range/Range';
+import { StockChart } from '../stockChart/StockChart';
+import { StockEntry } from '../stockEntry/StockEntry';
+import { Status } from '../status/Status';
+import { Stock } from '../stock/Stock';
 
-export const Page = ({ data, months, retrieving, errors, chartKey, onRangeChanged, onAddStock, onRemoveStock }) => {
+export const Page = ({ data, months, retrieving, errors, onRangeChanged, onAddStock, onRemoveStock }) => {
   const colors = ['blue', 'green', 'lightblue', 'lightgreen', 'purple', 'orange', 'lightpurple', 'steelblue'];
-  const stockData = data.map ((item, index) => Object.assign ({}, item, { color: colors[index] }));
+  const stockData = data.map ((item, index) => ({ ...item, color: colors[index] }));
+
   const stocks = data.map ((item, index) => (
     <Stock
       key={item.symbol}
@@ -20,27 +20,32 @@ export const Page = ({ data, months, retrieving, errors, chartKey, onRangeChange
     />
   ));
 
-  // if not all tracking slots (8) are taken, show entry component
-  const stockEntry = (stocks.length < 8) ? <StockEntry onAddStock={onAddStock} /> : null;
-
   return (
-    <Fragment>
-      <Titlebar />
-      <Range months={months} onRangeChanged={onRangeChanged} />
+    <>
+      <div className='titlebar'>
+        <div className='title'>StockTracker</div>
+      </div>
+      <div style={{ marginTop: '4px', marginBottom: '4px' }}>
+        <Range
+          months={months}
+          onRangeChanged={onRangeChanged}
+        />
+      </div>
       <StockChart
-        key={chartKey}
         className='stockChart'
         width={900}
         height={500}
         months={months}
         stocks={stockData}
       />
-      <div className='stockArea'>
-        {stocks}
-        {stockEntry}
+      <div style={{ display: 'flex' }}>
+        { stocks }
       </div>
+      { stocks.length < 8 && (
+        <StockEntry onAddStock={onAddStock} />
+      )}
       <Status requests={retrieving} errors={errors} />
-    </Fragment>
+    </>
   );
 };
 
@@ -49,7 +54,6 @@ Page.propTypes = {
   months: PropTypes.number.isRequired,
   retrieving: PropTypes.arrayOf (PropTypes.string).isRequired,
   errors: PropTypes.arrayOf (PropTypes.string).isRequired,
-  chartKey: PropTypes.number.isRequired,
   onRangeChanged: PropTypes.func.isRequired,
   onAddStock: PropTypes.func.isRequired,
   onRemoveStock: PropTypes.func.isRequired,

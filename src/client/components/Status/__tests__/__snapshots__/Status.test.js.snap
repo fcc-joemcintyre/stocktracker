@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Status displays 2 errors 1`] = `
-<div
-  className="statusBox"
->
+<div>
   <div>
     Pending requests: 
     none
@@ -16,9 +14,7 @@ exports[`Status displays 2 errors 1`] = `
 `;
 
 exports[`Status displays 2 requests 1`] = `
-<div
-  className="statusBox"
->
+<div>
   <div>
     Pending requests: 
     GE,V
@@ -31,9 +27,7 @@ exports[`Status displays 2 requests 1`] = `
 `;
 
 exports[`Status displays 2 requests and 2 errors 1`] = `
-<div
-  className="statusBox"
->
+<div>
   <div>
     Pending requests: 
     GE,V
@@ -46,9 +40,7 @@ exports[`Status displays 2 requests and 2 errors 1`] = `
 `;
 
 exports[`Status displays default content 1`] = `
-<div
-  className="statusBox"
->
+<div>
   <div>
     Pending requests: 
     none

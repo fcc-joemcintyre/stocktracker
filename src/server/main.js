@@ -1,9 +1,5 @@
-const processCommand = require ('./cmd').processCommand;
-const server = require ('./server');
-
-if (require.main === module) {
-  main ();
-}
+import { processCommand } from './cmd.js';
+import { start } from './server.js';
 
 /**
  * Process command line to start server.
@@ -16,5 +12,7 @@ function main () {
   }
 
   const port = process.env.PORT || command.port;
-  server.start (port);
+  start (port);
 }
+
+main ();

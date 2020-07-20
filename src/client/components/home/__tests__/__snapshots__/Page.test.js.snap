@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App starting state 1`] = `
+exports[`Page starting state 1`] = `
 Array [
   <div
     className="Page__Titlebar-sc-1a69eyg-0 dWdWBy"
@@ -39,7 +39,7 @@ Array [
           onClick={[Function]}
           style={
             Object {
-              "backgroundColor": "teal",
+              "backgroundColor": "blue",
               "borderLeft": null,
               "color": "#ffffff",
               "display": "inline-block",
@@ -53,7 +53,7 @@ Array [
           onClick={[Function]}
           style={
             Object {
-              "backgroundColor": "blue",
+              "backgroundColor": "teal",
               "borderLeft": "1px solid #ffffff",
               "color": "#ffffff",
               "display": "inline-block",

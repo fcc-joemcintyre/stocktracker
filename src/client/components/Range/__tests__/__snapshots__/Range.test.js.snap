@@ -2,148 +2,376 @@
 
 exports[`Range has default selection (1yr) 1`] = `
 <div
-  className="rangeBox"
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
 >
-  <span
-    className=""
-    onClick={[Function]}
+  <div
+    style={
+      Object {
+        "border": "1px solid #7f7f7f",
+        "borderRadius": "8px",
+        "overflow": "hidden",
+      }
+    }
   >
-    1m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    3m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    6m
-  </span>
-  <span
-    className="selected"
-    onClick={[Function]}
-  >
-    1y
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    3y
-  </span>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": null,
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      6m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "teal",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1y
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3y
+    </div>
+  </div>
+  <div
+    flex="1 1 0"
+  />
 </div>
 `;
 
 exports[`Range has minimum selection (1m) 1`] = `
 <div
-  className="rangeBox"
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
 >
-  <span
-    className="selected"
-    onClick={[Function]}
+  <div
+    style={
+      Object {
+        "border": "1px solid #7f7f7f",
+        "borderRadius": "8px",
+        "overflow": "hidden",
+      }
+    }
   >
-    1m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    3m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    6m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    1y
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    3y
-  </span>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "teal",
+          "borderLeft": null,
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      6m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1y
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3y
+    </div>
+  </div>
+  <div
+    flex="1 1 0"
+  />
 </div>
 `;
 
 exports[`Range has minimum selection (36m) 1`] = `
 <div
-  className="rangeBox"
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
 >
-  <span
-    className=""
-    onClick={[Function]}
+  <div
+    style={
+      Object {
+        "border": "1px solid #7f7f7f",
+        "borderRadius": "8px",
+        "overflow": "hidden",
+      }
+    }
   >
-    1m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    3m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    6m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    1y
-  </span>
-  <span
-    className="selected"
-    onClick={[Function]}
-  >
-    3y
-  </span>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": null,
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      6m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1y
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "teal",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3y
+    </div>
+  </div>
+  <div
+    flex="1 1 0"
+  />
 </div>
 `;
 
 exports[`Range has set selection (3m) 1`] = `
 <div
-  className="rangeBox"
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
 >
-  <span
-    className=""
-    onClick={[Function]}
+  <div
+    style={
+      Object {
+        "border": "1px solid #7f7f7f",
+        "borderRadius": "8px",
+        "overflow": "hidden",
+      }
+    }
   >
-    1m
-  </span>
-  <span
-    className="selected"
-    onClick={[Function]}
-  >
-    3m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    6m
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    1y
-  </span>
-  <span
-    className=""
-    onClick={[Function]}
-  >
-    3y
-  </span>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": null,
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "teal",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      6m
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      1y
+    </div>
+    <div
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "borderLeft": "1px solid #ffffff",
+          "color": "#ffffff",
+          "display": "inline-block",
+          "padding": "4px 12px",
+        }
+      }
+    >
+      3y
+    </div>
+  </div>
+  <div
+    flex="1 1 0"
+  />
 </div>
 `;

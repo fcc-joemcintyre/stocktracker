@@ -1,36 +1,79 @@
-const express = require ('express');
-const bodyParser = require ('body-parser');
-const path = require ('path');
-const http = require ('http');
-const socketio = require ('socket.io');
-const routes = require ('./routes');
-const listener = require ('./listener');
+import express from 'express';
+import fs from 'fs';
+import helmet from 'helmet';
+import http from 'http';
+import path from 'path';
+import socketio from 'socket.io';
+import * as routes from './routes.js';
+import * as listener from './listener.js';
 
 let server;
 let io;
 
-/**
- * Start the Stock Tracker server.
- * @param {number} port Server port to listen on
- * @return {void}
- */
-function start (port) {
-  console.log ('Starting Stock Tracker server');
+// ensure HTTPS is used for all interactions
+const httpsOnly = (req, res, next) => {
+  if (req.headers['x-forwarded-proto'] &&
+    req.headers['x-forwarded-proto'] !== 'https') {
+    res.redirect (['https://', req.hostname, req.url].join (''));
+  } else {
+    next ();
+  }
+};
 
+// Start the server
+export function start (port) {
   try {
-    // initialize and start server
+    console.log ('INFO Starting server');
     const app = express ();
-    app.use (bodyParser.json ());
-    app.use (bodyParser.urlencoded ({ extended: false }));
-    app.use (express.static (path.join (__dirname, 'public')));
+
+    // if production deployment, only allow https connections
+    if (process.env.NODE_ENV === 'production') {
+      app.use (httpsOnly);
+    }
+
+    // Express security best practices
+    app.use (helmet ());
+
+    // set up HTTP parsers and session manager
+    app.use (express.json ());
+    app.use (express.urlencoded ({ extended: true }));
+
+    routes.init (app);
+
+    app.get ('*.js', (req, res) => {
+      const file = path.join (process.cwd (), `dist/public${req.path}.gz`);
+      if (req.acceptsEncodings ('gzip') && fs.existsSync (file)) {
+        res.set ({
+          'content-type': 'text/javascript',
+          'content-encoding': 'gzip',
+        });
+        res.sendFile (file);
+      } else {
+        res.set ({
+          'content-type': 'text/javascript',
+        });
+        res.sendFile (path.join (process.cwd (), `dist/public${req.path}`));
+      }
+    });
+
+    // static file handling
+    app.use (express.static (path.join (process.cwd (), 'dist/public')));
+
+    // for not explicitly handled REST routes, return 404 message
+    app.use ('/api/*', (req, res) => {
+      res.status (404).json ({});
+    });
+    // for all other routes, let client react-router handle them
+    app.get ('*', (req, res) => {
+      res.sendFile (path.join (process.cwd (), 'dist/public/index.html'));
+    });
 
     server = http.createServer (app);
     io = socketio.listen (server);
+    listener.setSocket (io);
 
-    listener.init (io);
-    routes.init (app, listener);
     server.listen (port, () => {
-      console.log (`Stock Tracker server listening on port ${port}`);
+      console.log (`INFO Server listening on port ${port}`);
     });
   } catch (err) {
     console.log ('ERROR Server startup', err);
@@ -38,15 +81,10 @@ function start (port) {
   }
 }
 
-function stop () {
+export function stop () {
   return new Promise ((resolve) => {
-    if (server) {
-      server.close (() => {
-        resolve ();
-      });
-    }
+    server.close (() => {
+      resolve ();
+    });
   });
 }
-
-exports.start = start;
-exports.stop = stop;

@@ -61,14 +61,12 @@ https.
 
 ## Technology Selections
 
-The server is implemented with Node.js version 6.x and uses ES2015 Javascript
-conforming to the native ES2015 support provided in this version of Node.js.
+The server is implemented with Node.js version 12.x and uses ES2020 Javascript
+conforming to the native ES2020 support provided in this version of Node.js.
 
-The client interface is implemented with React 15.x using ES2015 Javascript
+The client interface is implemented with React 16.x using ES2020 Javascript
 as supported by Babel.
 
 Socket.io is used for broadcast communications between the server and client.
 
-CSS is defined using SCSS, using Sass as the CSS preprocessor.
-
-Gulp is used for build.
+Webpack is used for build.
