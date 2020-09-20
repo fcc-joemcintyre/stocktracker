@@ -3,10 +3,10 @@
 exports[`Page starting state 1`] = `
 Array [
   <div
-    className="Page__Titlebar-sc-1a69eyg-0 dWdWBy"
+    className="titlebar"
   >
     <div
-      className="Page__Title-sc-1a69eyg-1 jkTmXE"
+      className="title"
     >
       StockTracker
     </div>
