@@ -55,7 +55,7 @@
     "webpack-cli": "3.3.12"
   },
   "engines": {
-    "node": "^12.18.4"
+    "node": "^14.15.3"
   },
   "jest": {
     "setupFilesAfterEnv": ["./jestSetup.js"],
