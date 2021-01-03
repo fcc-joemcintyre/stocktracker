@@ -39,8 +39,9 @@ function draw (node, stocks, months, width, height) {
   const contentHeight = height - margin.top - margin.bottom;
 
   // set default x and y axis values if no data
-  const minDate = dateOffset (new Date (), months);
-  const maxDate = new Date ();
+  const lastDate = new Date (2018, 2, 26);
+  const minDate = dateOffset (lastDate, months);
+  const maxDate = lastDate;
   let maxPrice = 100;
 
   // set x scale by date, y scale by closing price

@@ -88,7 +88,7 @@ function addStock (symbol) {
 
   process.nextTick (async () => {
     // calculate start / end dates (3 year history)
-    const date = new Date ();
+    const date = new Date (2018, 2, 26);
     date.setFullYear (date.getFullYear () - 3);
     const startDate = `${date.getFullYear ()}-${date.getMonth () + 1}-${date.getDate ()}`;
     const dates = `start_date=${startDate}`;
