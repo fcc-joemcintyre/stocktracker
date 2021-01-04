@@ -3,7 +3,7 @@ import fs from 'fs';
 import helmet from 'helmet';
 import http from 'http';
 import path from 'path';
-import socketio from 'socket.io';
+import { Server } from 'socket.io';
 import * as routes from './routes.js';
 import * as listener from './listener.js';
 
@@ -32,7 +32,9 @@ export function start (port) {
     }
 
     // Express security best practices
-    app.use (helmet ());
+    app.use (helmet ({
+      contentSecurityPolicy: false,
+    }));
 
     // set up HTTP parsers and session manager
     app.use (express.json ());
@@ -69,7 +71,7 @@ export function start (port) {
     });
 
     server = http.createServer (app);
-    io = socketio.listen (server);
+    io = new Server (server);
     listener.setSocket (io);
 
     server.listen (port, () => {

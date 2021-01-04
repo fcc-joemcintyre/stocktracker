@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { Page } from '../home/Page';
 
-const socket = io.connect ();
+const socket = io ();
 
 export const App = () => {
   const [months, setMonths] = useState (1);
