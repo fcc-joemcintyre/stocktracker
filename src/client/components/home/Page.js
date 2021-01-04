@@ -23,7 +23,7 @@ export const Page = ({ data, months, retrieving, errors, onRangeChanged, onAddSt
   return (
     <>
       <div className='titlebar'>
-        <div className='title'>StockTracker</div>
+        <h1 className='title'>StockTracker</h1>
       </div>
       <div style={{ marginTop: '4px', marginBottom: '4px' }}>
         <Range

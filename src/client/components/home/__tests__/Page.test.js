@@ -1,10 +1,10 @@
 /* eslint-env jest */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
 import { Page } from '../Page';
 
 test ('Page starting state', () => {
-  const component = renderer.create (
+  render (
     <Page
       data={[]}
       months={3}
@@ -16,6 +16,6 @@ test ('Page starting state', () => {
       onRemoveStock={jest.fn ()}
     />
   );
-  const tree = component.toJSON ();
-  expect (tree).toMatchSnapshot ();
+  expect (screen.getByRole ('heading')).toBeDefined ();
+  expect (screen.getByRole ('heading')).toHaveTextContent ('StockTracker');
 });

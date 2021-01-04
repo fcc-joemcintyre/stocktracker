@@ -1,53 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Status displays 2 errors 1`] = `
-<div>
-  <div>
-    Pending requests: 
-    none
-  </div>
-  <div>
-    Errors: 
-    BCD not found,XYZ not found
-  </div>
-</div>
-`;
+exports[`Status displays 2 errors 1`] = `[Function]`;
 
-exports[`Status displays 2 requests 1`] = `
-<div>
-  <div>
-    Pending requests: 
-    GE,V
-  </div>
-  <div>
-    Errors: 
-    none
-  </div>
-</div>
-`;
+exports[`Status displays 2 requests 1`] = `[Function]`;
 
-exports[`Status displays 2 requests and 2 errors 1`] = `
-<div>
-  <div>
-    Pending requests: 
-    GE,V
-  </div>
-  <div>
-    Errors: 
-    BCD not found,XYZ not found
-  </div>
-</div>
-`;
+exports[`Status displays 2 requests and 2 errors 1`] = `[Function]`;
 
-exports[`Status displays default content 1`] = `
-<div>
-  <div>
-    Pending requests: 
-    none
-  </div>
-  <div>
-    Errors: 
-    none
-  </div>
-</div>
-`;
+exports[`Status displays default content 1`] = `[Function]`;

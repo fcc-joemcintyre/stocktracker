@@ -1,32 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StockEntry initial display 1`] = `
-<form
-  onSubmit={[Function]}
->
-  <label
-    htmlFor="symbolText"
-  >
-    Symbol:
-  </label>
-   
-  <input
-    id="symbolText"
-    onChange={[Function]}
-    style={
-      Object {
-        "width": "60px",
-      }
-    }
-    type="text"
-    value=""
-  />
-   
-  <button
-    disabled={true}
-    type="submit"
-  >
-    Track
-  </button>
-</form>
-`;
+exports[`StockEntry initial display 1`] = `[Function]`;

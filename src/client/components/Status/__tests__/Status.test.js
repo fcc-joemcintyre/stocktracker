@@ -1,36 +1,32 @@
 /* eslint-env jest */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import { Status } from '../Status';
 
 test ('Status displays default content', () => {
-  const component = renderer.create (
+  const { asFragment } = render (
     <Status />
   );
-  const tree = component.toJSON ();
-  expect (tree).toMatchSnapshot ();
+  expect (asFragment).toMatchSnapshot ();
 });
 
 test ('Status displays 2 requests', () => {
-  const component = renderer.create (
+  const { asFragment } = render (
     <Status requests={['GE', 'V']} />
   );
-  const tree = component.toJSON ();
-  expect (tree).toMatchSnapshot ();
+  expect (asFragment).toMatchSnapshot ();
 });
 
 test ('Status displays 2 errors', () => {
-  const component = renderer.create (
+  const { asFragment } = render (
     <Status errors={['BCD not found', 'XYZ not found']} />
   );
-  const tree = component.toJSON ();
-  expect (tree).toMatchSnapshot ();
+  expect (asFragment).toMatchSnapshot ();
 });
 
 test ('Status displays 2 requests and 2 errors', () => {
-  const component = renderer.create (
+  const { asFragment } = render (
     <Status requests={['GE', 'V']} errors={['BCD not found', 'XYZ not found']} />
   );
-  const tree = component.toJSON ();
-  expect (tree).toMatchSnapshot ();
+  expect (asFragment).toMatchSnapshot ();
 });
