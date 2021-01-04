@@ -133,9 +133,9 @@ function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
   // mouse capture implementation
   //  on mouse enter (mouseover) and leave (mouseout), enable/disable
   //  on mouse move (mousemove), adjust line/tooltip position and content
-  chart.on ('mousemove', () => {
+  chart.on ('mousemove', (event) => {
     // calculate index item
-    const x = xScale.invert (d3.event.pageX - margin.left - 8);
+    const x = xScale.invert (event.pageX - margin.left - 8);
     const bisect = d3.bisector ((d) => d[0]).left;
     const index = bisect (stocks[0].data, x, 1);
 
@@ -153,11 +153,11 @@ function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
         .duration (200)
         .style ('opacity', 0.9);
       tooltip.html (text)
-        .style ('left', `${(d3.event.pageX + 5)}px`)
-        .style ('top', `${(d3.event.pageY - 28)}px`);
+        .style ('left', `${(event.pageX + 5)}px`)
+        .style ('top', `${(event.pageY - 28)}px`);
       tooltipLine
         .style ('opacity', 0.9)
-        .style ('left', `${(d3.event.pageX)}px`);
+        .style ('left', `${(event.pageX)}px`);
     }
   });
   chart.on ('mouseover', () => {
