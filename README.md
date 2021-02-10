@@ -23,12 +23,18 @@ The application can be used at https://stocktracker-jm.herokuapp.com
 
 ## Development setup
 
-Clone the *Github* repo, then install the dependencies using *yarn* or *npm*.
+Note that this repo uses features from npm version 7. To update to version 7, use
+
+```
+npm i -g npm
+```
+
+Clone the *Github* repo, then install the dependencies using *npm*.
 
 ```
 git clone https://github.com/fcc-joemcintyre/stocktracker.git
 cd stocktracker
-yarn (or npm install)
+npm install
 ```
 
 ### Build
@@ -36,12 +42,12 @@ yarn (or npm install)
 In a terminal, build can be activated with
 
 ```
-yarn [build | build-stage] (or npm run [build | build-stage])
+npm run [build | build-stage]
 ```
 
 The build uses *Webpack* to run the set of build tasks. The build options are,
 
-- build: regular build
+- build: dev build
 - build-stage: build application ready to be deployed to Heroku or similar
 
 *build* is a continuous build option - the build will
@@ -53,13 +59,13 @@ set up watches and rerun build elements as file changes are saved.
 Unit testing can be done for all components,
 
 ```
-yarn test (or npm test)
+npm test
 ```
 
 Integration testing can be done using,
 
 ```
-yarn test-int (or npm run integration-test)
+npm run test-int
 ```
 
 ### Coverage
@@ -67,7 +73,7 @@ yarn test-int (or npm run integration-test)
 Coverage reports are generated using,
 
 ```
-yarn test --coverage (or npm test -- --coverage)
+npm test -- --coverage
 ```
 
 The coverage report will be available from
@@ -79,7 +85,7 @@ In a terminal, continuous server operation, updating on changes,
 can be activated with
 
 ```
-yarn start (or npm start)
+npm start
 ```
 
 The *nodemon* utility provides restart on update.

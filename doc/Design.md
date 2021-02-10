@@ -61,10 +61,10 @@ https.
 
 ## Technology Selections
 
-The server is implemented with Node.js version 12.x and uses ES2020 Javascript
+The server is implemented with Node.js version 14.x and uses ES2020 Javascript
 conforming to the native ES2020 support provided in this version of Node.js.
 
-The client interface is implemented with React 16.x using ES2020 Javascript
+The client interface is implemented with React 17.x using ES2020 Javascript
 as supported by Babel.
 
 Socket.io is used for broadcast communications between the server and client.

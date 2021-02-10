@@ -1,0 +1,18 @@
+{
+  "extends": "@cygns",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {},
+      "webpack": {
+        "config": "./app/client/webpack.config.js"
+      }
+    }
+  }
+}

@@ -1,1 +1,1 @@
-web: node dist/main.js -p=$PORT
+web: npm start
