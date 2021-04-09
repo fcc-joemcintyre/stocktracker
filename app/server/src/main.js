@@ -3,7 +3,7 @@ import { start } from './server.js';
 
 /**
  * Process command line to start server.
- * @return {void}
+ * @returns {void}
  */
 function main () {
   const command = processCommand (process.argv.slice (2));

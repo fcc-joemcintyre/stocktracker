@@ -20,7 +20,10 @@ const httpsOnly = (req, res, next) => {
   }
 };
 
-// Start the server
+/**
+ * Start the server
+ * @param {number} port HTTP port number
+ */
 export function start (port) {
   try {
     console.log ('INFO Starting server');
@@ -83,6 +86,10 @@ export function start (port) {
   }
 }
 
+/**
+ * Stop the server
+ * @returns {Promise<void>}
+ */
 export function stop () {
   return new Promise ((resolve) => {
     server.close (() => {

@@ -8,7 +8,7 @@ let stocks = [];
  * Initialize. Setup Socket.io connection listener, sending current current
  * data to newly connecting client.
  * @param {Object} _io Socket.io instance
- * @return {void}
+ * @returns {void}
  */
 export function setSocket (_io) {
   io = _io;
@@ -22,7 +22,7 @@ export function setSocket (_io) {
  * Register interest in a stock to track.
  * @param {Object} req Request
  * @param {Object} res Response
- * @return {void}
+ * @returns {void}
  */
 export async function registerStock (req, res) {
   let result;
@@ -51,7 +51,7 @@ export async function registerStock (req, res) {
  * Deregister interest in a stock to track.
  * @param {Object} req Request
  * @param {Object} res Response
- * @return {void}
+ * @returns {void}
  */
 export function deregisterStock (req, res) {
   let result;
@@ -77,7 +77,7 @@ export function deregisterStock (req, res) {
 /**
  * Add a stock, fetching its historical data (async)
  * @param {string} symbol Stock trading symbol
- * @return {void}
+ * @returns {void}
  */
 function addStock (symbol) {
   const key = process.env.QKEY;
@@ -130,7 +130,7 @@ function addStock (symbol) {
 
 /**
  * Broadcast tracked stocks to all connected clients (async)
- * @return {void}
+ * @returns {void}
  */
 function broadcast () {
   process.nextTick (() => {

@@ -1,7 +1,7 @@
 /**
  * Parse a string to an integer, returning null if not an integer
- * @param {String} value String to convert
- * @returns {Number} Converted number, or null
+ * @param {string} value String to convert
+ * @returns {number} Converted number, or null
  */
 function getInteger (value) {
   const result = Number (value);
@@ -11,8 +11,8 @@ function getInteger (value) {
 /**
  * Valid command options
  *  [-p | --port] port to listen on, default 3000
- * @param {[String]} args Array of arguments
- * @returns {Object} code:{Integer}, exit:{Boolean}, port:{Integer}
+ * @param {string[]} args Array of arguments
+ * @returns {object} code:{Integer}, exit:{Boolean}, port:{Integer}
  */
 export function processCommand (args) {
   let showHelp = false;
@@ -64,7 +64,7 @@ export function processCommand (args) {
   // if help argument or errors, output usage message
   if ((showHelp === true) || (errors.length > 0)) {
     const message =
-`Usage: stocktracker [-p=port] [-h]
+`Usage: node dist/main.js [-p=port] [-h]
   -p or --port      Port number to listen on. Default: ${defaults.port}
   -h or --help      This message.`;
     console.log (message);
