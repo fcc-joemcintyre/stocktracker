@@ -184,7 +184,7 @@ function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
 }
 
 StockChart.propTypes = {
-  stocks: PropTypes.arrayOf (PropTypes.object).isRequired,
+  stocks: PropTypes.arrayOf (PropTypes.shape ({})).isRequired,
   months: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,

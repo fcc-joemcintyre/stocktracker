@@ -56,19 +56,19 @@ export const App = () => {
    * @param {string} symbol Stock trading symbol
    * @return {void}
    */
-  function onAddStock (symbol) {
+  const onAddStock = (symbol) => {
     server ('PUT', symbol);
     setRetrieving ([...retrieving, symbol]);
-  }
+  };
 
   /**
    * Remove stock from interest (remove from retrieving or monitored set).
    * @param {string} symbol Stock trading symbol
    * @return {void}
    */
-  function onRemoveStock (symbol) {
+  const onRemoveStock = (symbol) => {
     server ('DELETE', symbol);
-  }
+  };
 
   /**
    * Initiate interaction with server. Data will be received through
@@ -95,9 +95,9 @@ export const App = () => {
    * @param {number} value Number of months in range
    * @return {void}
    */
-  function onRangeChanged (value) {
+  const onRangeChanged = (value) => {
     setMonths (value);
-  }
+  };
 
   const left = retrieving.filter ((a) => (data.data.find ((b) => b.symbol === a) === undefined));
   return (

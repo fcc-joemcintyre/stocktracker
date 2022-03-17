@@ -15,7 +15,7 @@
     "app/server"
   ],
   "dependencies": {
-    "nodemon": "2.0.7"
+    "nodemon": "2.0.15"
   },
   "scripts": {
     "clean": "rm -rf dist",
@@ -34,6 +34,6 @@
     "build:client": "cd app/client && npm run build"
   },
   "engines": {
-    "node": "^16.0"
+    "node": "^16.13"
   }
 }
