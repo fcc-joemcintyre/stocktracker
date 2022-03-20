@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import helmet from 'helmet';
 import http from 'http';
@@ -7,11 +7,11 @@ import { Server } from 'socket.io';
 import * as routes from './routes.js';
 import * as listener from './listener.js';
 
-let server;
+let server: http.Server | undefined;
 let io;
 
 // ensure HTTPS is used for all interactions
-const httpsOnly = (req, res, next) => {
+const httpsOnly = (req: Request, res: Response, next: NextFunction) => {
   if (req.headers['x-forwarded-proto'] &&
     req.headers['x-forwarded-proto'] !== 'https') {
     res.redirect (['https://', req.hostname, req.url].join (''));
@@ -22,9 +22,9 @@ const httpsOnly = (req, res, next) => {
 
 /**
  * Start the server
- * @param {number} port HTTP port number
+ * @param port HTTP port number
  */
-export function start (port) {
+export async function start (port: number) {
   try {
     console.log ('INFO Starting server');
     const app = express ();
@@ -77,9 +77,8 @@ export function start (port) {
     io = new Server (server);
     listener.setSocket (io);
 
-    server.listen (port, () => {
-      console.log (`INFO Server listening on port ${port}`);
-    });
+    await listenAsync (server, port);
+    console.log (`INFO Server listening on port ${port}`);
   } catch (err) {
     console.log ('ERROR Server startup', err);
     process.exit (1);
@@ -90,10 +89,20 @@ export function start (port) {
  * Stop the server
  * @returns {Promise<void>}
  */
-export function stop () {
+export async function stop (): Promise<void> {
+  if (server) {
+    await server.close ();
+  }
+}
+
+/**
+ * Async / await support for http.Server.listen
+ * @param s http.Server instance
+ * @param port port number
+ * @returns Promise to await server.listen on
+ */
+function listenAsync (s: http.Server, port: number) {
   return new Promise ((resolve) => {
-    server.close (() => {
-      resolve ();
-    });
+    s.listen (port, () => { resolve (true); });
   });
 }

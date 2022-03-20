@@ -1,16 +1,29 @@
+import { Request, Response } from 'express';
 import fetch from 'node-fetch';
+import { Server } from 'socket.io';
+
+type Dataset = {
+  name: string,
+  data: string,
+};
+
+type Stock = {
+  symbol: string,
+  status: number,
+  name: string | null,
+  data: string | null,
+};
 
 // socket.io and stock data
-let io;
-let stocks = [];
+let io: Server;
+let stocks: Stock[] = [];
 
 /**
  * Initialize. Setup Socket.io connection listener, sending current current
  * data to newly connecting client.
- * @param {Object} _io Socket.io instance
- * @returns {void}
+ * @param _io Socket.io instance
  */
-export function setSocket (_io) {
+export function setSocket (_io: Server): void {
   io = _io;
   io.on ('connection', (socket) => {
     console.log ('added connection');
@@ -24,7 +37,7 @@ export function setSocket (_io) {
  * @param {Object} res Response
  * @returns {void}
  */
-export async function registerStock (req, res) {
+export async function registerStock (req: Request, res: Response) {
   let result;
   let { symbol } = req.params;
   if (symbol) {
@@ -53,7 +66,7 @@ export async function registerStock (req, res) {
  * @param {Object} res Response
  * @returns {void}
  */
-export function deregisterStock (req, res) {
+export function deregisterStock (req: Request, res: Response) {
   let result;
   let { symbol } = req.params;
   if (symbol) {
@@ -76,10 +89,9 @@ export function deregisterStock (req, res) {
 
 /**
  * Add a stock, fetching its historical data (async)
- * @param {string} symbol Stock trading symbol
- * @returns {void}
+ * @param symbol Stock trading symbol
  */
-function addStock (symbol) {
+function addStock (symbol: string): void {
   const key = process.env.QKEY;
   if (!key) {
     console.log ('Quandl key not set up');
@@ -100,7 +112,7 @@ function addStock (symbol) {
     const res = await fetch (url, {
       method: 'GET',
     });
-    const data = await res.json ();
+    const data = await res.json () as { dataset: Dataset };
     if (res.ok) {
       const index = data.dataset.name.indexOf ('(');
       const name = (index === -1) ? data.dataset.name : data.dataset.name.substring (0, index - 1);
@@ -113,15 +125,16 @@ function addStock (symbol) {
       });
       broadcast ();
       console.log (`${symbol} now being tracked`);
+      // uncomment next line for development data recording
       // fs.writeFileSync (`${symbol}.json`, JSON.stringify (data.dataset.data));
     } else {
       stocks.push ({
-        status: res.statusCode,
+        status: res.status,
         symbol,
         name: null,
         data: null,
       });
-      console.log ('Fetch error: status code ', res.statusCode);
+      console.log ('Fetch error: status code ', res.status);
       console.log ('  Detailed msg', data);
       broadcast ();
     }
