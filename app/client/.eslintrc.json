@@ -1,18 +1,19 @@
 {
-  "extends": "@cygns",
+  "extends": [
+    "@cygns/eslint-config",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "env": {
     "browser": true
   },
   "rules": {
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "no-use-before-define": "off",
+    "react/jsx-filename-extension": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {},
-      "webpack": {
-        "config": "./app/client/webpack.config.js"
-      }
-    }
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off"
   }
 }
