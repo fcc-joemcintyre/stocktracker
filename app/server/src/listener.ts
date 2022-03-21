@@ -110,16 +110,16 @@ async function addStock (symbol: string): Promise<boolean> {
     const dir = cwd.endsWith ('/dist') ? '../app/server/test' : '../test';
     const filename = `${dir}/${symbol.toUpperCase ()}.json`;
 
+    let result = true;
     try {
       const data = fs.readFileSync (filename, { encoding: 'utf-8' });
       stocks.push ({
         status: 0,
         symbol,
         name: names[symbol] || symbol.toUpperCase (),
-        data,
+        data: JSON.parse (data),
       });
       console.log (`${symbol} now being tracked`);
-      return true;
     } catch (err) {
       console.log ('Error reading test file', filename);
       stocks.push ({
@@ -128,8 +128,10 @@ async function addStock (symbol: string): Promise<boolean> {
         name: null,
         data: null,
       });
-      return false;
+      result = false;
     }
+    broadcast ();
+    return result;
   }
 
   const key = process.env.QKEY;

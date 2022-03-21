@@ -26,7 +26,7 @@
     "test:server": "cd app/server && npm run test",
     "test:client": "cd app/client && npm run test",
     "start": "cd dist && node main.js -p=${PORT}",
-    "dev:start": "cd dist && nodemon main.js -p=3000",
+    "dev:start": "cd dist && NODE_ENV=test nodemon main.js -p=3000",
     "dev:server": "cd app/server && npm run dev",
     "dev:client": "cd app/client && npm run dev",
     "build": "npm run clean && npm run build:server && npm run build:client",
