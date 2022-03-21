@@ -20,7 +20,8 @@
     "build": "npm run build:copy && tsc",
     "build:copy": "mkdir -p ../../dist/public && cp -r public/* ../../dist/public",
     "dev": "nodemon --watch public --exec 'npm run build:copy' & tsc -w",
-    "test": "mocha test/**/*",
+    "dev:start": "cd src && NODE_ENV=test node --loader=ts-node/esm main.js --port=3000",
+    "test": "NODE_ENV=test mocha test/**/*",
     "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern .",
     "start": "node dist/main.js --port=3000"
   },

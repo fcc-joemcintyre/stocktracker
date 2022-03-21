@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { Request, Response } from 'express';
 import fetch from 'node-fetch';
 import { Server } from 'socket.io';
@@ -38,7 +39,8 @@ export function setSocket (_io: Server): void {
  * @returns {void}
  */
 export async function registerStock (req: Request, res: Response) {
-  let result;
+  console.log ('registerStock');
+  let result = { errorCode: 0, message: '' };
   let { symbol } = req.params;
   if (symbol) {
     // add if symbol not already active
@@ -51,9 +53,11 @@ export async function registerStock (req: Request, res: Response) {
       }
     }
     if (!found) {
-      await addStock (symbol);
+      const added = await addStock (symbol);
+      if (!added) {
+        result = { errorCode: 1, message: 'Symbol not found' };
+      }
     }
-    result = { errorCode: 0 };
   } else {
     result = { errorCode: 1, message: 'Symbol missing' };
   }
@@ -67,7 +71,8 @@ export async function registerStock (req: Request, res: Response) {
  * @returns {void}
  */
 export function deregisterStock (req: Request, res: Response) {
-  let result;
+  console.log ('deregisterStock');
+  let result = { errorCode: 0, message: '' };
   let { symbol } = req.params;
   if (symbol) {
     // if present, remove from stocks
@@ -80,7 +85,6 @@ export function deregisterStock (req: Request, res: Response) {
         break;
       }
     }
-    result = { errorCode: 0 };
   } else {
     result = { errorCode: 1, message: 'Symbol missing' };
   }
@@ -90,62 +94,95 @@ export function deregisterStock (req: Request, res: Response) {
 /**
  * Add a stock, fetching its historical data (async)
  * @param symbol Stock trading symbol
+ * @returns Symbol added or not
  */
-function addStock (symbol: string): void {
-  const key = process.env.QKEY;
-  if (!key) {
-    console.log ('Quandl key not set up');
-    return;
-  }
+async function addStock (symbol: string): Promise<boolean> {
+  console.log ('addStock', symbol);
+  // if not production, use test files as data source
+  if (process.env.NODE_ENV === 'test') {
+    const names: Record<string, string> = {
+      IBM: 'IBM Corporation',
+      MSFT: 'Microsoft Corporation',
+    };
 
-  process.nextTick (async () => {
-    // calculate start / end dates (3 year history)
-    const date = new Date (2018, 2, 26);
-    date.setFullYear (date.getFullYear () - 3);
-    const startDate = `${date.getFullYear ()}-${date.getMonth () + 1}-${date.getDate ()}`;
-    const dates = `start_date=${startDate}`;
+    // navigate from server running from build, or test runner
+    const cwd = process.cwd ();
+    const dir = cwd.endsWith ('/dist') ? '../app/server/test' : '../test';
+    const filename = `${dir}/${symbol.toUpperCase ()}.json`;
 
-    // construct url and retrieve data
-    const keyParam = (key) ? `&api_key=${key}` : '';
-    const base = `https://www.quandl.com/api/v3/datasets/WIKI/${symbol}.json`;
-    const url = `${base}?order=asc&${dates}${keyParam}`;
-    const res = await fetch (url, {
-      method: 'GET',
-    });
-    const data = await res.json () as { dataset: Dataset };
-    if (res.ok) {
-      const index = data.dataset.name.indexOf ('(');
-      const name = (index === -1) ? data.dataset.name : data.dataset.name.substring (0, index - 1);
-      // add stock to set of tracked stocks, broadcast to connected clients
+    try {
+      const data = fs.readFileSync (filename, { encoding: 'utf-8' });
       stocks.push ({
         status: 0,
         symbol,
-        name,
-        data: data.dataset.data,
+        name: names[symbol] || symbol.toUpperCase (),
+        data,
       });
-      broadcast ();
       console.log (`${symbol} now being tracked`);
-      // uncomment next line for development data recording
-      // fs.writeFileSync (`${symbol}.json`, JSON.stringify (data.dataset.data));
-    } else {
+      return true;
+    } catch (err) {
+      console.log ('Error reading test file', filename);
       stocks.push ({
-        status: res.status,
+        status: 404,
         symbol,
         name: null,
         data: null,
       });
-      console.log ('Fetch error: status code ', res.status);
-      console.log ('  Detailed msg', data);
-      broadcast ();
+      return false;
     }
+  }
+
+  const key = process.env.QKEY;
+  if (!key) {
+    console.log ('Quandl key not set up');
+    return false;
+  }
+
+  // calculate start / end dates (3 year history)
+  const date = new Date (2018, 2, 26);
+  date.setFullYear (date.getFullYear () - 3);
+  const startDate = `${date.getFullYear ()}-${date.getMonth () + 1}-${date.getDate ()}`;
+  const dates = `start_date=${startDate}`;
+
+  // construct url and retrieve data
+  const keyParam = (key) ? `&api_key=${key}` : '';
+  const base = `https://www.quandl.com/api/v3/datasets/WIKI/${symbol}.json`;
+  const url = `${base}?order=asc&${dates}${keyParam}`;
+  const res = await fetch (url, {
+    method: 'GET',
   });
+  const data = await res.json () as { dataset: Dataset };
+  if (res.ok) {
+    const index = data.dataset.name.indexOf ('(');
+    const name = (index === -1) ? data.dataset.name : data.dataset.name.substring (0, index - 1);
+    // add stock to set of tracked stocks, broadcast to connected clients
+    stocks.push ({
+      status: 0,
+      symbol,
+      name,
+      data: data.dataset.data,
+    });
+    console.log (`${symbol} now being tracked`);
+    // uncomment next line for development data recording
+    // fs.writeFileSync (`${symbol}.json`, JSON.stringify (data.dataset.data));
+  } else {
+    stocks.push ({
+      status: res.status,
+      symbol,
+      name: null,
+      data: null,
+    });
+    console.log ('Fetch error: status code ', res.status);
+    console.log ('  Detailed msg', data);
+  }
+  broadcast ();
+  return res.ok;
 }
 
 /**
  * Broadcast tracked stocks to all connected clients (async)
- * @returns {void}
  */
-function broadcast () {
+function broadcast (): void {
   process.nextTick (() => {
     if (io) {
       console.log ('broadcast', stocks.length, 'tracked stocks');
