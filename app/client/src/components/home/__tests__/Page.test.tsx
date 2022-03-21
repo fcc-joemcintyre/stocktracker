@@ -9,7 +9,6 @@ test ('Page starting state', () => {
       months={3}
       retrieving={[]}
       errors={[]}
-      chartKey={0}
       onRangeChanged={jest.fn ()}
       onAddStock={jest.fn ()}
       onRemoveStock={jest.fn ()}

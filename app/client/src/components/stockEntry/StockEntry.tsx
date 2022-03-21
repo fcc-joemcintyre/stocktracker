@@ -1,7 +1,12 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 
-export const StockEntry = ({ onAddStock }) => {
+type Props = {
+  onAddStock: (symbol: string) => void,
+};
+
+export const StockEntry = ({
+  onAddStock,
+}: Props) => {
   const [symbol, setSymbol] = useState ('');
 
   function onChange (e) {
@@ -35,8 +40,4 @@ export const StockEntry = ({ onAddStock }) => {
       </button>
     </form>
   );
-};
-
-StockEntry.propTypes = {
-  onAddStock: PropTypes.func.isRequired,
 };

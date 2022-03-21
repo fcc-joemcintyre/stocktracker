@@ -1,10 +1,10 @@
-/**
+/*
  * Calculate a date in the past by a number of months.
- * @param {Date} date Starting date
- * @param {number} monthsAgo Number of months to go back
- * @return {Date} Date provided minus number of months
+ * @param date Starting date
+ * @param monthsAgo Number of months to go back
+ * @returns Date provided minus number of months
  */
-export function dateOffset (date, monthsAgo) {
+export function dateOffset (date: Date, monthsAgo: number): Date {
   if (monthsAgo === 0) {
     return date;
   }

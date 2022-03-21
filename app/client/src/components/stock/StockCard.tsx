@@ -1,6 +1,13 @@
-import PropTypes from 'prop-types';
+type Props = {
+  name: string,
+  symbol: string,
+  color: string,
+  onRemoveStock: (symbol: string) => void,
+};
 
-export const Stock = ({ name, symbol, color, onRemoveStock }) => {
+export const StockCard = ({
+  name, symbol, color, onRemoveStock,
+}: Props) => {
   function onRemove () {
     onRemoveStock (symbol);
   }
@@ -29,11 +36,4 @@ export const Stock = ({ name, symbol, color, onRemoveStock }) => {
       </div>
     </div>
   );
-};
-
-Stock.propTypes = {
-  name: PropTypes.string.isRequired,
-  symbol: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  onRemoveStock: PropTypes.func.isRequired,
 };

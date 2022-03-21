@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
+import { Stock } from './types';
 import { Page } from '../home/Page';
 
 const socket = io ();
 
 export const App = () => {
-  const [months, setMonths] = useState (1);
-  const [data, setData] = useState ({ data: [], errors: [] });
-  const [retrieving, setRetrieving] = useState ([]);
+  const [months, setMonths] = useState<number> (1);
+  const [data, setData] = useState ({ data: [], errors: [] } as { data: Stock[], errors: string[]});
+  const [retrieving, setRetrieving] = useState<string[]> ([]);
 
   /**
    * At start, establish socket connection with monitoring server
@@ -26,7 +27,7 @@ export const App = () => {
       const d = JSON.parse (input);
 
       // divide error and completed data items
-      const errors = [];
+      const errors: string[] = [];
       const filtered = d.filter ((item) => {
         if (item.status !== 0) {
           const text = (item.status >= 500) ? 'Stock quote service unavailable' :

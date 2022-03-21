@@ -1,13 +1,24 @@
-import { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+import { MutableRefObject, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { Stock } from '../app/types';
 import { dateOffset } from './dateOffset';
+
+type StockDisplay = Stock & { color: string };
+
+type Props = {
+  stocks: StockDisplay[],
+  months: number,
+  width: number,
+  height: number,
+};
 
 // array indexes for stock data
 const DATE = 0;
 const CLOSE = 11;
 
-export const StockChart = ({ stocks, months, width, height }) => {
+export const StockChart = ({
+  stocks, months, width, height,
+}: Props) => {
   const node = useRef (null);
 
   useEffect (() => {
@@ -26,7 +37,7 @@ export const StockChart = ({ stocks, months, width, height }) => {
   );
 };
 
-function draw (node, stocks, months, width, height) {
+function draw (node: MutableRefObject<null>, stocks: StockDisplay[], months: number, width: number, height: number) {
   if (node === null) {
     return;
   }
@@ -182,10 +193,3 @@ function setupMouseTracker (chart, stocks, margin, width, height, xScale) {
     .attr ('width', width)
     .attr ('height', height);
 }
-
-StockChart.propTypes = {
-  stocks: PropTypes.arrayOf (PropTypes.shape ({})).isRequired,
-  months: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-};

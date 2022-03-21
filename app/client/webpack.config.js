@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require ('path');
 const CompressionPlugin = require ('compression-webpack-plugin');
 
@@ -5,11 +6,14 @@ const baseDest = path.resolve (__dirname, '../../dist');
 
 module.exports = {
   entry: {
-    app: './src/components/app/index.js',
+    app: './src/components/app/index.tsx',
   },
   output: {
     filename: '[name].bundle.js',
     path: `${baseDest}/public/js`,
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
@@ -21,13 +25,6 @@ module.exports = {
           compilerOptions: {
             noEmit: false,
           },
-        },
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
         },
       },
     ],

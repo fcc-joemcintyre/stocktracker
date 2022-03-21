@@ -1,16 +1,28 @@
-import PropTypes from 'prop-types';
 import { Range } from '../range/Range';
 import { StockChart } from '../stockChart/StockChart';
 import { StockEntry } from '../stockEntry/StockEntry';
 import { Status } from '../status/Status';
-import { Stock } from '../stock/Stock';
+import { StockCard } from '../stock/StockCard';
+import { Stock } from '../app/types.js';
 
-export const Page = ({ data, months, retrieving, errors, onRangeChanged, onAddStock, onRemoveStock }) => {
+type Props = {
+  data: Stock[],
+  months: number,
+  retrieving: string[],
+  errors: string[],
+  onRangeChanged: (months: number) => void,
+  onAddStock: (symbol: string) => void,
+  onRemoveStock: (symbol: string) => void,
+};
+
+export const Page = ({
+  data, months, retrieving, errors, onRangeChanged, onAddStock, onRemoveStock,
+}: Props) => {
   const colors = ['blue', 'green', 'lightblue', 'lightgreen', 'purple', 'orange', 'lightpurple', 'steelblue'];
   const stockData = data.map ((item, index) => ({ ...item, color: colors[index] }));
 
   const stocks = data.map ((item, index) => (
-    <Stock
+    <StockCard
       key={item.symbol}
       symbol={item.symbol}
       name={item.name}
@@ -31,7 +43,6 @@ export const Page = ({ data, months, retrieving, errors, onRangeChanged, onAddSt
         />
       </div>
       <StockChart
-        className='stockChart'
         width={900}
         height={500}
         months={months}
@@ -46,14 +57,4 @@ export const Page = ({ data, months, retrieving, errors, onRangeChanged, onAddSt
       <Status requests={retrieving} errors={errors} />
     </>
   );
-};
-
-Page.propTypes = {
-  data: PropTypes.arrayOf (PropTypes.shape ({})).isRequired,
-  months: PropTypes.number.isRequired,
-  retrieving: PropTypes.arrayOf (PropTypes.string).isRequired,
-  errors: PropTypes.arrayOf (PropTypes.string).isRequired,
-  onRangeChanged: PropTypes.func.isRequired,
-  onAddStock: PropTypes.func.isRequired,
-  onRemoveStock: PropTypes.func.isRequired,
 };
