@@ -15,6 +15,7 @@ const Item = ({
       color: '#ffffff',
       backgroundColor: selected ? 'teal' : 'blue',
       borderLeft: months > 1 ? '1px solid #ffffff' : undefined,
+      cursor: 'pointer',
     }}
     onClick={() => onRangeChanged (months)}
   >
