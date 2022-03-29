@@ -23,12 +23,6 @@ The application can be used at https://stocktracker-jm.herokuapp.com
 
 ## Development setup
 
-Note that this repo uses features from npm version 7. To update to version 7, use
-
-```
-npm i -g npm
-```
-
 Clone the *Github* repo, then install the dependencies using *npm*.
 
 ```
@@ -39,20 +33,26 @@ npm install
 
 ### Build
 
-In a terminal, build can be activated with
+In a terminal, production build can be activated with
 
 ```
-npm run [build | build-stage]
+npm run build
 ```
 
-The build uses *Webpack* to run the set of build tasks. The build options are,
+The build uses *Webpack* to run the set of build tasks.
 
-- build: dev build
-- build-stage: build application ready to be deployed to Heroku or similar
+For development builds, use separate terminal instances to run the server
+and client builds,
 
-*build* is a continuous build option - the build will
-set up watches and rerun build elements as file changes are saved.
-*build-stage* is a one time build option, run again to build a new stage output.
+```
+npm run dev:server
+```
+
+and
+
+```
+npm run dev:client
+```
 
 ## Testing
 
@@ -62,30 +62,19 @@ Unit testing can be done for all components,
 npm test
 ```
 
-Integration testing can be done using,
-
-```
-npm run test-int
-```
-
-### Coverage
-
-Coverage reports are generated using,
-
-```
-npm test -- --coverage
-```
-
-The coverage report will be available from
-*coverage/index.html*
-
 ### Server
 
 In a terminal, continuous server operation, updating on changes,
-can be activated with
+for production testing can be activated with
 
 ```
 npm start
+```
+
+To run the with the test environment enabled, use
+
+```
+npm dev:start
 ```
 
 The *nodemon* utility provides restart on update.
