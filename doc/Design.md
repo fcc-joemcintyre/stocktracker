@@ -59,13 +59,19 @@ The heroku instance uses https for transport security between the browser and
 application. Other deployments of this application may choose to use http or
 https.
 
+## Data Provider
+
+Financial data is provided by Quandl, and is limited to the historical stock
+quotation data available. Since updated data has not been available for some
+time, the date ranges represent historical date ranges backward from the last
+date present.
+
 ## Technology Selections
 
-The server is implemented with Node.js version 14.x and uses ES2020 Javascript
-conforming to the native ES2020 support provided in this version of Node.js.
+The server is implemented with Node.js version 16.x and uses Typescript
+with ES2020 output.
 
-The client interface is implemented with React 17.x using ES2020 Javascript
-as supported by Babel.
+The client interface is implemented with React 17.x using Typescript.
 
 Socket.io is used for broadcast communications between the server and client.
 
