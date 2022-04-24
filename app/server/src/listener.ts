@@ -34,8 +34,8 @@ export function setSocket (_io: Server): void {
 
 /**
  * Register interest in a stock to track.
- * @param {Object} req Request
- * @param {Object} res Response
+ * @param {object} req Request
+ * @param {object} res Response
  * @returns {void}
  */
 export async function registerStock (req: Request, res: Response) {
@@ -66,8 +66,8 @@ export async function registerStock (req: Request, res: Response) {
 
 /**
  * Deregister interest in a stock to track.
- * @param {Object} req Request
- * @param {Object} res Response
+ * @param {object} req Request
+ * @param {object} res Response
  * @returns {void}
  */
 export function deregisterStock (req: Request, res: Response) {
