@@ -19,7 +19,7 @@ result in all clients seeing the changed set of stocks).
 
 ## Live instance
 
-The application can be used at https://stocktracker-jm.herokuapp.com
+The application can be used at https://stocktracker-jm.onrender.com
 
 ## Development setup
 
@@ -85,9 +85,6 @@ After starting a server instance, open a browser and then access the
 application at http://localhost:3000
 
 ## Deployment
-
-The build process creates the *dist* directory containing all the deployment
-files (in the project directory or in the staging directory).
 
 The entry point for the server is *main.js*.
 The port number for the server can be passed on the command (-p/--port) or using
