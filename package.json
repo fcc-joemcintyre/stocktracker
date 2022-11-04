@@ -34,6 +34,6 @@
     "build:client": "cd app/client && npm run build"
   },
   "engines": {
-    "node": "^18.10"
+    "node": "^18.12"
   }
 }
